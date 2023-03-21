@@ -9,9 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.FirstLevelDivision;
 import model.Model;
+
+import java.awt.*;
+import java.awt.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,25 +27,25 @@ public class AddCustomerController implements Initializable {
     private Button addButton;
 
     @FXML
-    private TextField addressTextBox;
+    private javafx.scene.control.TextField addressTextBox;
 
     @FXML
     private ComboBox<String> countryTextBox;
 
     @FXML
-    private TextField customerIdTextBox;
+    private javafx.scene.control.TextField customerIdTextBox;
 
     @FXML
-    private TextField customerTextBox;
+    private javafx.scene.control.TextField customerTextBox;
 
     @FXML
     private ComboBox<FirstLevelDivision> firstLevelDivisionCombBox;
 
     @FXML
-    private TextField phoneNumberTextBox;
+    private javafx.scene.control.TextField phoneNumberTextBox;
 
     @FXML
-    private TextField postalCodeTextBox;
+    private javafx.scene.control.TextField postalCodeTextBox;
 
     @FXML
    public void initialize(URL location, ResourceBundle resource) {

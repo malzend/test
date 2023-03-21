@@ -184,7 +184,8 @@ public class ModifyAppointment implements Initializable {
 
         int appointmentNum = 0;
         int customerIdAlert = 0;
-        FilteredList<Appointment> customerInList = AppointmentQuery.appointmentData_new().filtered(t -> { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID; });
+        FilteredList<Appointment> customerInList = AppointmentQuery.appointmentData_new().filtered(t ->
+        { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID; });
 
         if (customerInList.size() > 0) {
 

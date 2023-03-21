@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
+import model.Model;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +25,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -34,13 +37,13 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private DatePicker endDataPicker;
     @FXML
-    private ComboBox<String> HourComboBox;
+    private ComboBox<Integer> HourComboBox;
     @FXML
-    private ComboBox<String> hourCombBox1;
+    private ComboBox<Integer> hourCombBox1;
     @FXML
-    private ComboBox<String> secondComboBox;
+    private ComboBox<Integer> secondComboBox;
     @FXML
-    private ComboBox<String> secondComboBox1;
+    private ComboBox<Integer> secondComboBox1;
     @FXML
     private TextField appointmentDescription;
     @FXML
@@ -62,8 +65,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField typeAppointmentText;
 
-    ObservableList<String> hours = FXCollections.observableArrayList();
-    ObservableList<String> minutes = FXCollections.observableArrayList();
+    //ObservableList<String> hours = FXCollections.observableArrayList();
+    ObservableList<Integer> minutes = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,11 +75,11 @@ public class AddAppointmentController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutes.addAll("00", "15", "30", "45");
-        HourComboBox.setItems(hours);
+      //  hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+        minutes.addAll(0, 15, 30, 45);
+        HourComboBox.setItems(Model.businessTime());
         secondComboBox.setItems(minutes);
-        hourCombBox1.setItems(hours);
+        hourCombBox1.setItems(Model.businessTime());
         secondComboBox1.setItems(minutes);
         try {
             contactAppointmentCombBox.setItems(AppointmentQuery.loadContact());
@@ -122,25 +125,25 @@ public class AddAppointmentController implements Initializable {
         LocalDate endDate = endDataPicker.getValue();
         int user = userIDText.getSelectionModel().getSelectedItem();
         int customer = customerIDText.getSelectionModel().getSelectedItem();
-        String hourStart = HourComboBox.getValue();
-        String secondStart = secondComboBox.getValue();
-        String timeOne = hourStart+":"+secondStart+":00";
-        Time timeOneConvert = Time.valueOf(timeOne);
-        String hourStart1 = hourCombBox1.getValue();
-        String secondStart1 = secondComboBox1.getValue();
-        String timeTwo = hourStart1+":"+secondStart1+":00";
-        Time timeTwoConvert = Time.valueOf(timeTwo);
+        int hourStart = HourComboBox.getValue();
+        int minutesStart = secondComboBox.getValue();
+        LocalTime timeOne = LocalTime.of(hourStart, minutesStart);
+        int hoursEnd = hourCombBox1.getValue();
+        int minutesEnd = secondComboBox1.getValue();
+        LocalTime timeTwo = LocalTime.of(hoursEnd, minutesEnd);
         int appointmentID = Integer.parseInt(appointmentIDText.getText());
-
         int contactID = contactAppointmentCombBox.getValue().getContactID();
 
-        LocalDateTime startDateTime = LocalDateTime.of(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth(), Integer.parseInt(hourStart), Integer.parseInt(secondStart));
-        LocalDateTime endDateTime = LocalDateTime.of(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth(), Integer.parseInt(hourStart1), Integer.parseInt(secondStart1));
+        LocalDateTime startDateTime = LocalDateTime.of(startDate,timeOne);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, timeTwo);
+
+      // ZonedDateTime startEstDateTime = ldt.atZone(ZoneId.of("America/New_York"));
 
         boolean test = false;
         int appointmentNum = 0;
 
-        FilteredList<Appointment> appointmentList = AppointmentQuery.appointmentData_new().filtered(t -> { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID;  });
+        FilteredList<Appointment> appointmentList = AppointmentQuery.appointmentData_new().filtered(t -> {
+            int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID;  });
 
 
         if (appointmentList.size() > 0) {
@@ -148,43 +151,23 @@ public class AddAppointmentController implements Initializable {
 
             for (int i = 0; i < appointmentList.size(); i++) {
 
-                String dateOne = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
-                String dateTwo = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
-                LocalDate testDateForStart = LocalDate.parse(dateOne);
-                LocalDate testDateForEnd =LocalDate.parse(dateTwo);
+//                String dateOne = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
+//                String dateTwo = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
+//                LocalDate testDateForStart = LocalDate.parse(dateOne);
+//                LocalDate testDateForEnd =LocalDate.parse(dateTwo);
 
                 LocalDateTime testStartDate = appointmentList.get(i).getStartTimeDate();
                 LocalDateTime testEndDate = appointmentList.get(i).getEndTimeDate();
 
-                Time testTimeForStart = Time.valueOf(appointmentTime.format(testStartDate));
-
-                Time testTimeForEnd = Time.valueOf(appointmentTime.format(testEndDate));
-
-
-                if(startDate.equals(testDateForEnd) && endDate.equals(testDateForStart)) {
-                    if(timeOneConvert.equals(testTimeForStart) || timeTwoConvert.equals(testTimeForEnd)){
-                        test = true;
-                        appointmentNum = i;
-                        break;
-                    }
-
-                    else  if (timeOneConvert.equals(testTimeForStart) && timeTwoConvert.equals(testTimeForEnd)) {
-                        test = true;
-                        appointmentNum = i;
-                        break;
-                    }
-                    else if(timeOneConvert.after(testTimeForStart) && timeTwoConvert.before(testTimeForEnd)){
-                        test = true;
-                        appointmentNum = i;
-                        break;
-                    }
-                    else if(timeTwoConvert.before(testTimeForEnd) && timeTwoConvert.after(testTimeForStart) ){
-                        test = true;
-                        appointmentNum = i;
-                        break;
-                    }
+                if(!(startDateTime.isAfter(testEndDate) || startDateTime.equals(testEndDate)
+                        || endDateTime.isBefore(testStartDate) || endDateTime.equals(testStartDate))){
+                    test = true;
+                    appointmentNum = i;
+                    break;
                 }
-            }}
+
+            }
+        }
 
         if ( test == true ) {
             Alert alertType = new Alert(Alert.AlertType.WARNING);

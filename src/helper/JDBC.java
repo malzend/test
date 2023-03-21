@@ -12,7 +12,7 @@ public abstract class JDBC {
     private static final String dataBaseName = "Client_schedule ";
     private static final String jdbcUrl = protocol + vender + location + dataBaseName + "?connectionTimeZone = SERVER";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
-    private static final String useName = "SqlUser";
+    private static final String useName = "sqlUser";
     private static final String password = "Passw0rd!";
     public static Connection connection;
 

@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.time.*;
 
 //import org.jetbrains.annotations.Nullable;
 
@@ -197,5 +198,34 @@ public class Model {
             }
         }
         return null;
+    }
+
+   public static ObservableList<Integer> businessTime() {
+
+        ObservableList<Integer> list =FXCollections.observableArrayList();
+
+       LocalDateTime estLDT = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,0));
+       ZoneId estZID = ZoneId.of("America/New_York");
+       ZonedDateTime estZDT = ZonedDateTime.of(estLDT,estZID);
+       ZoneId osZID = ZoneId.systemDefault();
+
+       ZonedDateTime osZDT = ZonedDateTime.ofInstant(estZDT.toInstant(), osZID);
+       System.out.println(estZDT);
+       System.out.println(osZDT);
+
+       int start = osZDT.getHour();
+       int midnight = 0;
+       for(int i = start; i <= start+14;i++){
+           if(i<24){
+             list.add(i);
+           }
+           else if(i>23){
+               list.add(midnight++);
+           }
+
+
+
+       }
+       return list;
     }
 }

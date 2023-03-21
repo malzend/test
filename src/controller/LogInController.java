@@ -47,8 +47,18 @@ public class LogInController implements Initializable {
     @FXML
     private TextField userName;
 
+    /**
+     * Description of the method.
+     * Lambda 1 what it does. Why did you chose this.
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     */
     @FXML
-    void LogIn(ActionEvent event) throws IOException, SQLException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    void LogIn(ActionEvent event) throws IOException, SQLException{
 
        // Signature sign = Signature.getInstance("SHA256withRSA");
 
@@ -72,7 +82,7 @@ public class LogInController implements Initializable {
         boolean test = helper.LogIn.validateUser(uName, password);
 
         if (test == true) {
-            FileWriter file = new FileWriter("/Users/mohamed/Downloads/test/src/activityLogin.txt",true);
+            FileWriter file = new FileWriter("activityLogin.txt",true);
             file.write("Successful login: "+ LocalDateTime.now()+ "\n");
             file.close();
 
@@ -88,16 +98,33 @@ public class LogInController implements Initializable {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyy-MM-dd");
             DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
             LocalDate osDate = LocalDate.now();
-            LocalTime osTime = LocalTime.parse(timeFormat.format(LocalTime.now().plusMinutes(4)));
+            LocalTime osTimeStart = LocalTime.now();
+            LocalTime osTimeEnd = osTimeStart.plusMinutes(15);
             LocalTime scheduled;
 
+            // Lambda 1
             filteredListAppointment.setPredicate((t) -> {
                 LocalDate dateOfAppointment = LocalDate.parse(dateFormat.format(t.getStartTimeDate()));
                 int whoUser = UserQuery.getUser(uName);
                 return dateOfAppointment.isEqual(osDate) && t.getUserID() == whoUser;
             });
 
-            if(filteredListAppointment.isEmpty()){
+            boolean upcoming = false;
+
+            for (int i = 0; i < filteredListAppointment.size(); i++) {
+                scheduled = LocalTime.parse(timeFormat.format(filteredListAppointment.get(i).getStartTimeDate()));
+                if (!(scheduled.isAfter(osTimeEnd) || scheduled.isBefore(osTimeStart))) {
+
+                    Alert alertAppointment = new Alert(Alert.AlertType.CONFIRMATION);
+                    alertAppointment.setTitle("Appointment for today");
+                    alertAppointment.setHeaderText("appointment within 15 minutes.");
+                    alertAppointment.setContentText("\n\n The appointment are the following: \n\n AppointmentID " + filteredListAppointment.get(i).getAppointmentID()
+                            + "\n\n Date: " + dateFormat.format(filteredListAppointment.get(i).getStartTimeDate()) + " Time: " + timeFormat.format(filteredListAppointment.get(i).getStartTimeDate()));
+                    alertAppointment.showAndWait();
+                    upcoming = true;
+                }
+            }
+            if(!upcoming){
                 Alert alertAppointment = new Alert(Alert.AlertType.CONFIRMATION);
                 alertAppointment.setTitle("Appointment for today");
                 alertAppointment.setHeaderText("No Upcoming appointment within 15 minutes for User");
@@ -105,21 +132,7 @@ public class LogInController implements Initializable {
 
                 alertAppointment.showAndWait();
             }
-            else if(filteredListAppointment.size() > 0) {
 
-                for (int i = 0; i < filteredListAppointment.size(); i++) {
-                    scheduled = LocalTime.parse(timeFormat.format(filteredListAppointment.get(i).getStartTimeDate()));
-                    if (scheduled.equals(osTime)) {
-
-                        Alert alertAppointment = new Alert(Alert.AlertType.CONFIRMATION);
-                        alertAppointment.setTitle("Appointment for today");
-                        alertAppointment.setHeaderText("appointment within 15 minutes.");
-                        alertAppointment.setContentText("\n\n The appointment are the following: \n\n AppointmentID " + filteredListAppointment.get(i).getAppointmentID()
-                                + "\n\n Date: " + dateFormat.format(filteredListAppointment.get(i).getStartTimeDate()) + " Time: " + timeFormat.format(filteredListAppointment.get(i).getStartTimeDate()));
-                        alertAppointment.showAndWait();
-                    }
-                }
-            }
 
             Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.fxml"));
             Scene scene = new Scene(customerPage, 600, 400);
@@ -130,7 +143,7 @@ public class LogInController implements Initializable {
         }
         else {
 
-            FileWriter file = new FileWriter("/Users/mohamed/Downloads/test/src/activityLogin.txt",true);
+            FileWriter file = new FileWriter("activityLogin.txt",true);
             file.write("Noun-Successful login: "+ LocalDateTime.now()+"\n");
             file.close();
 
