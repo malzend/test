@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyCustomerController">
+   <children>
+      <VBox layoutX="72.0" layoutY="70.0" prefHeight="245.0" prefWidth="104.0" style="-fx-spacing: 20;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name:" wrappingWidth="91.9140625" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="95.41748046875" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" wrappingWidth="93.22900390625" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Numbe:r " />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Level Division:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
+         </children>
+      </VBox>
+      <VBox layoutX="190.0" layoutY="69.0" prefHeight="242.0" prefWidth="155.0" style="-fx-spacing: 10;">
+         <children>
+            <TextField fx:id="customerTextBox" onAction="#customerTextBoxAction" />
+            <TextField fx:id="addressTextBox" onAction="#addressTextBoxAction" prefHeight="26.0" prefWidth="122.0" />
+            <TextField fx:id="postalCodeTextBox" onAction="#postalCodeTextBoxCtion" />
+            <TextField fx:id="phoneNumberTextBox" onAction="#phoneNumberTextBoxAction" />
+            <TextField fx:id="customerIdTextBox" disable="true" onAction="#customerIdTextBoxAction" />
+            <ComboBox fx:id="firstLevelDivisionCombBox" onAction="#firstLevelDivisionTextBoxAction" prefWidth="150.0" />
+            <ComboBox fx:id="countryComboBox" onAction="#countryTextBoxAction" prefWidth="150.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="376.0" layoutY="238.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#modifyButtonAction" prefHeight="0.0" prefWidth="99.0" text="Modify" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="515.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointment">
+   <children>
+      <VBox layoutX="48.0" layoutY="38.0" prefHeight="341.0" prefWidth="104.0" style="-fx-spacing: 20;">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="91.9140625" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="95.41748046875" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" wrappingWidth="93.22900390625" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" wrappingWidth="69.53857421875" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End time:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="End Date:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment ID:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use ID:" />
+         </children>
+      </VBox>
+      <VBox fx:id="endTimeText" layoutX="152.0" layoutY="26.0" onDragDetected="#endTimeTextAction" prefHeight="431.0" prefWidth="170.0" style="-fx-spacing: 10;">
+         <children>
+            <TextField fx:id="appointmentDescription" onAction="#appoiitmentDescriptionTextAction" prefHeight="26.0" prefWidth="170.0" />
+            <TextField fx:id="titleTextField" onAction="#titleTextAction" prefHeight="26.0" prefWidth="122.0" />
+            <TextField fx:id="locationAppointmentText" onAction="#locationAppointmentTextAction" />
+            <ComboBox fx:id="contactAppointmentCombBox" onAction="#contactCombBoxAction" prefHeight="26.0" prefWidth="172.0" />
+            <TextField fx:id="typeAppointmentText" onAction="#typeAppointmentTextAction" prefHeight="26.0" prefWidth="169.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="hourComboBox" onAction="#hourComboBoxAction" prefHeight="26.0" prefWidth="76.0" promptText="Hour" />
+                  <ComboBox fx:id="secondComboBox" onAction="#secondComboBoxAction" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="hourComboBox1" onAction="#hourComboBoxAction1" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
+                  <ComboBox fx:id="secondComboBox1" onAction="#secondComboBoxAction1" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+               </children>
+            </HBox>
+            <DatePicker fx:id="startDate" onAction="#startDateAction" />
+            <DatePicker fx:id="endDate" onAction="#endDateAction" />
+            <TextField fx:id="appointmentIDText" disable="true" onAction="#appointmentIDTextAction" />
+            <ComboBox fx:id="customerComboBox" disable="false" onAction="#customerIDTextAction" prefHeight="26.0" prefWidth="177.0" />
+            <ComboBox fx:id="userComboBox" disable="false" onAction="#UserIDTextAction" prefHeight="26.0" prefWidth="173.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="432.0" layoutY="399.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#appointmentButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#appointmentExitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

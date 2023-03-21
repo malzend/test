@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="904.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportController">
+   <children>
+      <VBox layoutX="38.0" layoutY="82.0" prefHeight="108.0" prefWidth="170.0" style="-fx-spacing: 10;">
+         <children>
+            <Button fx:id="totalCustomerButton" mnemonicParsing="false" onAction="#totalCustomerAction" prefHeight="26.0" prefWidth="169.0" text="Total Customer" />
+            <Button fx:id="ScheduleForEachContactButton" mnemonicParsing="false" onAction="#ScheduleForEachContactButton" prefHeight="26.0" prefWidth="168.0" text="Schedule For each Contact " />
+            <Button fx:id="whatToDoButton" mnemonicParsing="false" onAction="#whatToDoButtonAaction" prefHeight="26.0" prefWidth="167.0" text="What  to do" />
+         </children>
+      </VBox>
+      <Button fx:id="exitButton" layoutX="563.0" layoutY="321.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="99.0" text="Exit" />
+      <TableView fx:id="totalNumberTypeMonth" layoutX="252.0" layoutY="48.0" onSort="#totalNumberTypeMonthAction" prefHeight="200.0" prefWidth="227.0" visible="false">
+        <columns>
+          <TableColumn fx:id="type1" prefWidth="98.0" text="Type" />
+          <TableColumn fx:id="month1" prefWidth="128.0" text="Month" />
+        </columns>
+      </TableView>
+      <ComboBox fx:id="month2" layoutX="562.0" layoutY="110.0" prefWidth="150.0" visible="false" />
+      <ComboBox fx:id="type" layoutX="562.0" layoutY="76.0" prefWidth="150.0" visible="false" />
+      <Button fx:id="Go" layoutX="563.0" layoutY="154.0" mnemonicParsing="false" onAction="#GoAction" prefHeight="26.0" prefWidth="99.0" text="Go" visible="false" />
+      <TextField fx:id="totalCustomers" layoutX="526.0" layoutY="223.0" visible="false" />
+      <Text fx:id="customerLabel" layoutX="562.0" layoutY="205.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Total customers" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="typeLabel" layoutX="500.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" visible="false" />
+      <Text fx:id="monthLabel" layoutX="502.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mont:h" visible="false" />
+      <Text fx:id="contactLabel" layoutX="647.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" visible="false" />
+      <ComboBox fx:id="contact" layoutX="705.0" layoutY="76.0" prefWidth="150.0" visible="false" />
+      <Button fx:id="Go2" layoutX="745.0" layoutY="135.0" mnemonicParsing="false" onAction="#go2ActionButton" prefHeight="26.0" prefWidth="71.0" text="Go" visible="false" />
+      <ScrollPane fx:id="panel" layoutX="258.0" layoutY="61.0" prefHeight="200.0" prefWidth="363.0" visible="false">
+         <content>
+            <TableView fx:id="contactScheduleReport" prefHeight="200.0" prefWidth="530.0" visible="false">
+              <columns>
+                <TableColumn fx:id="appointmentID" prefWidth="108.0" text="Appointment ID" />
+                <TableColumn fx:id="title" prefWidth="42.0" text="Title" />
+                  <TableColumn fx:id="type2" prefWidth="75.0" text="Type" />
+                  <TableColumn fx:id="description" prefWidth="75.0" text="Description" />
+                  <TableColumn fx:id="start" prefWidth="75.0" text="Start" />
+                  <TableColumn fx:id="end" prefWidth="75.0" text="End" />
+                  <TableColumn fx:id="customerID" prefWidth="75.0" text="CustomerID" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <ComboBox fx:id="countryName" layoutX="587.0" layoutY="69.0" prefWidth="150.0" />
+      <Button fx:id="Go3" layoutX="630.0" layoutY="122.0" mnemonicParsing="false" onAction="#go3Action" prefHeight="26.0" prefWidth="65.0" text="Go" />
+      <TextField fx:id="countryNameField" editable="false" layoutX="372.0" layoutY="76.0" />
+      <TextField fx:id="totalCustomerField" editable="false" layoutX="372.0" layoutY="119.0" />
+      <Label fx:id="countryLabel" layoutX="252.0" layoutY="81.0" text="Country" />
+      <Label fx:id="totalCustomerLabel" layoutX="252.0" layoutY="128.0" text="Totale Customers" />
+   </children>
+</AnchorPane>

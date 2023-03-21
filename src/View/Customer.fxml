@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+   <children>
+      <VBox layoutX="524.0" layoutY="62.0" prefHeight="200.0" prefWidth="142.0" style="-fx-spacing: 10;">
+         <children>
+            <Button fx:id="makeAppointmentButton" mnemonicParsing="false" onAction="#makeAppointmentAction" prefHeight="25.0" prefWidth="145.0" text="Make Appoitnment">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin></Button>
+            <Button fx:id="addCustomerButton" mnemonicParsing="false" onAction="#addCustomerAction" prefHeight="25.0" prefWidth="147.0" text="Add Customer" />
+            <Button fx:id="modifyCustomerButton" mnemonicParsing="false" onAction="#modifyCustomerAction" prefHeight="26.0" prefWidth="143.0" text="Modify Customer" />
+            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onAction="#deleteCustomerAction" prefHeight="25.0" prefWidth="139.0" text="Delete Customer" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="223.0" text="Exit" />
+         </children>
+      </VBox>
+      <ScrollPane layoutX="31.0" layoutY="62.0" pannable="true" prefHeight="200.0" prefWidth="477.0">
+         <content>
+            <TableView fx:id="customerTable" onSort="#customerTableAction" prefHeight="187.0" prefWidth="660.0">
+              <columns>
+                <TableColumn fx:id="customerID" prefWidth="99.0" text="Customer_ID" />
+                <TableColumn fx:id="customerName" prefWidth="106.0" text="Customer_Name" />
+                  <TableColumn fx:id="address" prefWidth="63.0" text="Address" />
+                  <TableColumn fx:id="postalCode" prefWidth="91.0" text="Postal_Code" />
+                  <TableColumn fx:id="phoneNumber" prefWidth="91.0" text="Phone_Number" />
+                  <TableColumn prefWidth="170.0" text="First Level Division" />
+                  <TableColumn prefWidth="38.0" text="Country" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
