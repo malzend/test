@@ -25,7 +25,19 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ *  ReportController will do the following:<br>
+ *  Filter appointments by type and month.<br>
+ *  Filter appointment by contact.<br>
+ *  Get total customer in each country.<br>
+ */
 public class ReportController implements Initializable {
+    /**
+     * <br>
+     * FXML id selectors <br>
+     * <br>
+     * selectors used to read or set form fields <br>
+     */
     @FXML
     private ScrollPane panel;
     @FXML
@@ -54,87 +66,74 @@ public class ReportController implements Initializable {
     private Button Go2;
     @FXML
     private Button Go3;
-
     @FXML
     private ComboBox<String> month2;
-
     @FXML
     private ComboBox<Country> countryName;
-
     @FXML
     private ComboBox<String> type;
-
-    @FXML
-    private Button ScheduleForEachContactButton;
-
     @FXML
     private TableColumn<Appointment, Integer> appointmentID;
-
     @FXML
     private TableColumn<Report, String> month1;
-
     @FXML
     private TableColumn<Appointment, Integer> customerID;
-
     @FXML
     private TableColumn<Appointment, String> description;
-
     @FXML
     private TableColumn<Appointment, Integer> end;
-
-    @FXML
-    private Button exitButton;
-
     @FXML
     private TableColumn<Appointment, Integer> start;
-
     @FXML
     private TableColumn<Appointment, String> title;
-
     @FXML
     private TableView<Report> totalNumberTypeMonth;
     @FXML
     private TableView<Appointment> contactScheduleReport;
     @FXML
     private TableColumn<Report, Integer> total;
-
-    @FXML
-    private Button totalCustomerButton;
-
     @FXML
     private TableColumn<Report, String> type1;
     @FXML
     private TableColumn<Appointment, String> type2;
 
-    @FXML
-    private Button whatToDoButton;
-
     ObservableList<String> monthComboBox = FXCollections.observableArrayList();
     ObservableList<String> typeComboBox = FXCollections.observableArrayList();
     ObservableList<String> contactComboBox = FXCollections.observableArrayList();
 
+    /**
+     * initialize will load the contactComboBox and countryName date from the database.<br>
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-        for(int i = 0; i <AppointmentQuery.loadContact().size(); i++) {
+            for(int i = 0; i <AppointmentQuery.loadContact().size(); i++) {
 
                 contactComboBox.add(AppointmentQuery.loadContact().get(i).getContactName());}
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         contact.setItems(contactComboBox);
 
-            try {
-                countryName.setItems(CustomerQuery.countryDATA());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+        try {
+            countryName.setItems(CustomerQuery.countryDATA());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
+    /**
+     * ScheduleForEachContactButton will display the appropriate contents the is used to display <br>
+     * appointments scheduled for each contact.<br>
+     * @throws SQLException
+     */
+
     @FXML
-    void ScheduleForEachContactButton(ActionEvent event) throws SQLException {
+    void ScheduleForEachContactButton() throws SQLException {
         type.setVisible(false);
         month2.setVisible(true);
         totalCustomers.setVisible(false);
@@ -172,18 +171,33 @@ public class ReportController implements Initializable {
 
     }
 
+    /**
+     * exitButtonAction used to load the User page.
+     * @param event on button will exit the program <br>
+     * @throws IOException
+     */
+
     @FXML
     void exitButtonAction(ActionEvent event) throws IOException {
         Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.FXML"));
         Stage Window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+
         Scene scene = new Scene(customerPage,600,400);
         Window.setScene(scene);
         Window.setTitle("Report Page:");
         Window.show();
     }
 
+    /**
+     * totalCustomerAction filters total customer by the type and the month.<br>
+     * totalCustomerAction will display the appropriate contents the is used to display <br>
+     * appointments scheduled for each contact.<br>
+     * @throws SQLException
+     */
+
     @FXML
-    void totalCustomerAction(ActionEvent event) throws SQLException {
+    void totalCustomerAction() throws SQLException {
 
         monthComboBox.addAll("1","2", "3", "4", "5", "6", "0", "8", "9", "10", "11", "12");
         month2.setItems(monthComboBox);
@@ -225,8 +239,14 @@ public class ReportController implements Initializable {
         month1.setCellValueFactory(new PropertyValueFactory<Report, String>("ReportType"));
     }
 
+    /**
+     * whatToDoButtonAction filter the total number of customers in each country. <br>
+     * will display the appropriate contents the is used to display <br>
+     * appointments scheduled for each contact.<br>
+     */
+
     @FXML
-    void whatToDoButtonAaction(ActionEvent event) {
+    void whatToDoButtonAction() {
 
         try {
             AppointmentQuery.loadTypeMonth();
@@ -259,11 +279,18 @@ public class ReportController implements Initializable {
 
     }
 
+
+
     @FXML
-    void totalNumberTypeMonthAction(ActionEvent event) {
+    void totalNumberTypeMonthAction() {
     }
 
-    public void GoAction(ActionEvent event) throws SQLException {
+    /**
+     * GoAction calls the method joinTypeMonth from AppointmentQuery and passed type and month.<br>
+     * The for loop add the total customer by type and month and displays the output in a text field.
+     * @throws SQLException
+     */
+    public void GoAction() throws SQLException {
         int countType = 0;
         for ( int i = 0; i<totalNumberTypeMonth.getItems().size(); i++) {
             totalNumberTypeMonth.getItems().clear();
@@ -284,21 +311,27 @@ public class ReportController implements Initializable {
         totalCustomers.setText(String.valueOf(countType));
 
     }
-    @FXML
-    void go2ActionButton(ActionEvent event) throws SQLException {
-        contactScheduleReport.getItems().clear();
 
+    /**
+     * go2ActionButton method get the contact name and then compares it in if condition.<br>
+     * If the condition is true then it returns the appointments accosted with the contact.
+     *
+     * @throws SQLException
+     */
+    @FXML
+    void go2ActionButton() throws SQLException {
+        contactScheduleReport.getItems().clear();
 
         int countType = 0;
         String contactName = contact.getSelectionModel().getSelectedItem();
         if(contactName.equals("Anika Costa") ){
-           countType = 1;
+            countType = 1;
         }
         else if(contactName.equals("Daniel Garcia")){
             countType = 2;
         }
         else if(contactName.equals("Li Lee")){
-          countType = 3;
+            countType = 3;
         }
 
         contactScheduleReport.setItems(AppointmentQuery.customerContact(countType));
@@ -311,8 +344,14 @@ public class ReportController implements Initializable {
         customerID.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("CustomerID"));
 
     }
+
+    /**
+     * go3Action method filters the total customers in each country.<br>
+     * The loop will loop through each customer data and return the county base on division ID.<br>
+     * @throws SQLException
+     */
     @FXML
-    void go3Action(ActionEvent event ) throws SQLException {
+    void go3Action() throws SQLException {
         Model.removeFilterDivision();
 
         int countCustomer = 0;

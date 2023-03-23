@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.control.TextField ?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.addCustomerController">
    <children>
       <VBox layoutX="62.0" layoutY="60.0" prefHeight="245.0" prefWidth="104.0" style="-fx-spacing: 20;">
          <children>
@@ -26,11 +19,11 @@
       </VBox>
       <VBox layoutX="180.0" layoutY="59.0" prefHeight="242.0" prefWidth="155.0" style="-fx-spacing: 10;">
          <children>
-            <TextField fx:id="customerTextBox" onAction="#customerTectBoxAction" prefHeight="26.0" prefWidth="119.0" />
+            <TextField fx:id="customerTextBox" onAction="#customerTextBoxAction" prefHeight="26.0" prefWidth="119.0" />
             <TextField fx:id="addressTextBox" onAction="#addressTextBoxAction" />
             <TextField fx:id="postalCodeTextBox" onAction="#postalCodeTextBoxCtion" />
             <TextField fx:id="phoneNumberTextBox" onAction="#phoneNumberTextBoxAction" />
-            <TextField fx:id="customerIdTextBox" disable="true" onAction="#customerIdTextBoxAction" />
+            <TextField fx:id="customerIdTextBox" disable="true" onAction="#customerIdTextBoxAction" text="Auto Generated " />
             <ComboBox fx:id="firstLevelDivisionCombBox" onAction="#firstLevelDivisionTextBoxAction" prefWidth="150.0" />
             <ComboBox fx:id="countryTextBox" onAction="#coutryTextBoxAction" prefWidth="150.0" />
          </children>

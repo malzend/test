@@ -37,17 +37,17 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <ComboBox fx:id="hourComboBox" onAction="#hourComboBoxAction" prefHeight="26.0" prefWidth="76.0" promptText="Hour" />
-                  <ComboBox fx:id="secondComboBox" onAction="#secondComboBoxAction" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+                  <ComboBox fx:id="minutseStert" onAction="#secondComboBoxAction" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <ComboBox fx:id="hourComboBox1" onAction="#hourComboBoxAction1" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
-                  <ComboBox fx:id="secondComboBox1" onAction="#secondComboBoxAction1" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+                  <ComboBox fx:id="minutesEned" onAction="#secondComboBoxAction1" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
                </children>
             </HBox>
-            <DatePicker fx:id="startDate" onAction="#startDateAction" />
-            <DatePicker fx:id="endDate" onAction="#endDateAction" />
+            <DatePicker fx:id="DatePicker" onAction="#startDateAction" />
+            <DatePicker fx:id="endPickerDate" onAction="#endDateAction" />
             <TextField fx:id="appointmentIDText" disable="true" onAction="#appointmentIDTextAction" />
             <ComboBox fx:id="customerComboBox" disable="false" onAction="#customerIDTextAction" prefHeight="26.0" prefWidth="177.0" />
             <ComboBox fx:id="userComboBox" disable="false" onAction="#UserIDTextAction" prefHeight="26.0" prefWidth="173.0" />

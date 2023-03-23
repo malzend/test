@@ -22,16 +22,24 @@ import model.Model;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class AddAppointmentController implements Initializable {
-
+/**
+ * addAppointmentController will do the following:<br>
+ * Allow the user to add a new appointment for a customer.<br>
+ * Display alert if the insertion of the date was successful or not to the database.<br>
+ * Allow the user to exit the page.<br>
+ */
+public class addAppointmentController implements Initializable {
+    /**
+     * <br>
+     * FXML id selectors. <br>
+     * <br>
+     * selectors used to read or set form fields. <br>
+     */
     @FXML
     private DatePicker DatePicker;
     @FXML
@@ -65,21 +73,20 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField typeAppointmentText;
 
-    //ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
-
+    /**
+     * initialize will populate the time , date and contact names for each combo, also  user ID and Customer id will<br>
+     *populated for the Database.
+     *  @param url
+     * @param resourceBundle
+     */
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            AppointmentQuery.appointmentAddEmpty();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-      //  hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutes.addAll(0, 15, 30, 45);
-        HourComboBox.setItems(Model.businessTime());
+        minutes.addAll(0, 15, 30, 45,59);
+        HourComboBox.setItems(Model.businessTimeStart());
         secondComboBox.setItems(minutes);
-        hourCombBox1.setItems(Model.businessTime());
+        hourCombBox1.setItems(Model.businessTimeStart());
         secondComboBox1.setItems(minutes);
         try {
             contactAppointmentCombBox.setItems(AppointmentQuery.loadContact());
@@ -101,22 +108,31 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
-    public void setColumnUserAndCustomer(int id) throws SQLException {
+    /**
+     * setColumnUserAndCustomer will get the customerIDText and appointmentIDText form the appointment page when<br>
+     * a row is selected.<br>
+     * @param id
+     */
+    public void setColumnUserAndCustomer(int id)  {
         customerIDText.setValue(id);
-        appointmentIDText.setText(String.valueOf(AppointmentQuery.leastappointmentID()));
     }
     @FXML
-    void UserIDTextAction(ActionEvent event) { }
+    void UserIDTextAction() { }
 
     @FXML
-    void appointmentDescriptionTextAction(ActionEvent event) { }
+    void appointmentDescriptionTextAction() { }
 
+    /**
+     * appointmentButtonAction will do the following:<br>
+     * Get the user input and convert time and date to LocalDateTime type.<br>
+     * Check if their is an overlap with another appointment if the Customer already has other appointment listed in the day.<br>
+     * Insert the date if their is no overlap with other appointment, if their is an overlap display an alert with the a overlap<br>
+     * appointment.<br>
+     * @throws SQLException
+     */
     @FXML
-    void appointmentButtonAction(ActionEvent event) throws SQLException {
+    void appointmentButtonAction() throws SQLException {
 
-
-        DateTimeFormatter appointmentTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-        DateTimeFormatter appointmentDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String title = titleTextField.getText();
         String description = appointmentDescription.getText();
         String location = locationAppointmentText.getText();
@@ -131,30 +147,28 @@ public class AddAppointmentController implements Initializable {
         int hoursEnd = hourCombBox1.getValue();
         int minutesEnd = secondComboBox1.getValue();
         LocalTime timeTwo = LocalTime.of(hoursEnd, minutesEnd);
-        int appointmentID = Integer.parseInt(appointmentIDText.getText());
         int contactID = contactAppointmentCombBox.getValue().getContactID();
 
         LocalDateTime startDateTime = LocalDateTime.of(startDate,timeOne);
         LocalDateTime endDateTime = LocalDateTime.of(endDate, timeTwo);
 
-      // ZonedDateTime startEstDateTime = ldt.atZone(ZoneId.of("America/New_York"));
 
         boolean test = false;
         int appointmentNum = 0;
 
         FilteredList<Appointment> appointmentList = AppointmentQuery.appointmentData_new().filtered(t -> {
-            int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID;  });
+            int num = t.getCustomerID();return num == customer; });
 
-
+        /**
+         * The if condition checks if the appointmentLisT is empty or not.<br>
+         * If not empty then it will processed to the check if there is an overlap between the customer existing<br>
+         * appointment or not.
+         */
         if (appointmentList.size() > 0) {
 
 
             for (int i = 0; i < appointmentList.size(); i++) {
 
-//                String dateOne = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
-//                String dateTwo = appointmentDate.format(appointmentList.get(i).getStartTimeDate());
-//                LocalDate testDateForStart = LocalDate.parse(dateOne);
-//                LocalDate testDateForEnd =LocalDate.parse(dateTwo);
 
                 LocalDateTime testStartDate = appointmentList.get(i).getStartTimeDate();
                 LocalDateTime testEndDate = appointmentList.get(i).getEndTimeDate();
@@ -169,6 +183,10 @@ public class AddAppointmentController implements Initializable {
             }
         }
 
+        /**
+         * if their is an overlap then display an alert.<br.
+         * if not processed to add the new appointment to the database.<br>
+         */
         if ( test == true ) {
             Alert alertType = new Alert(Alert.AlertType.WARNING);
             alertType.setTitle("Appointment Overlapped");
@@ -178,7 +196,7 @@ public class AddAppointmentController implements Initializable {
         }
 
         else if (test == false){
-            String processResult = AppointmentQuery.updateAppointment(appointmentID,title, description, location, type,  startDateTime, endDateTime, user, customer, contactID);
+            String processResult = AppointmentQuery.appointmentAdd(title, description, location, type,  startDateTime, endDateTime, user, customer, contactID);
 
             if(processResult.equals("Success")) {
                 Alert alertType = new Alert(Alert.AlertType.CONFIRMATION);
@@ -197,43 +215,45 @@ public class AddAppointmentController implements Initializable {
 
         }
 
+    /**
+     * appointmentTextButtonAction allow the user to exit form the page to the appointment page.
+     * @param event on button will exit the program <br>
+     * @throws IOException
+     */
     @FXML
-    void appointmentexitButtonAction(ActionEvent event) throws IOException, SQLException {
-        AppointmentQuery.appointmentDeleteEmpty();
+    void appointmentTextButtonAction(ActionEvent event) throws IOException {
 
         Parent userLogOut = FXMLLoader.load(getClass().getResource("/view/Appointment.fxml"));
         Stage Window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(userLogOut,800,400);
+        Scene scene = new Scene(userLogOut);
         Window.setScene(scene);
         Window.setTitle("Customer page:");
         Window.show();
     }
 
     @FXML
-    void appointmentIDTextAction(ActionEvent event) { }
+    void appointmentIDTextAction( ){ }
     @FXML
-    void contactCombBoxAction(ActionEvent event) { }
+    void contactCombBoxAction() { }
     @FXML
-    void customerIDTextAction(ActionEvent event) { }
+    void customerIDTextAction() { }
     @FXML
-    void endDateTextAction(ActionEvent event) { }
+    void locationAppointmentTextAction() { }
     @FXML
-    void locationAppointmentTextAction(ActionEvent event) { }
+    void titleTextAction() { }
     @FXML
-    void titleTextAction(ActionEvent event) { }
+    void typeAppointmentTextAction() { }
     @FXML
-    void typeAppointmentTextAction(ActionEvent event) { }
+    void DatePickerAction() { }
     @FXML
-    void DatePickerAction(ActionEvent event) { }
+    void endDataPicker(){}
     @FXML
-    void endDataPicker(ActionEvent event){}
+    void secondCombBox1() { }
     @FXML
-    void secondCombBox1(ActionEvent event) { }
+    void secondComboBox( ){}
     @FXML
-    void secondComboBox(ActionEvent event) {}
+    void HourComboBox(){}
     @FXML
-    void HourComboBox(ActionEvent event){}
-    @FXML
-    void hourCombBox1(ActionEvent event){}
+    void hourCombBox1(){}
 
 }
