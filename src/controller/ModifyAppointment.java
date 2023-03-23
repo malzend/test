@@ -23,67 +23,71 @@ import model.Model;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * modify will allow the user to do the following:
+ * Get the user data for the selected row and load it to the page.<br>
+ * Allow the user to change any data of the appointment.<br>
+ * Check for any overlap in appointment except the same appointment ID.
+ * Save the modify appointment in the database and display an alert if process was<br>
+ * successful or not.<br>
+ */
 public class ModifyAppointment implements Initializable {
-
+    /**
+     * <br>
+     * FXML id selectors. <br>
+     * <br>
+     * selectors used to read or set form fields. <br>
+     */
     public TextField appointmentIDText;
     @FXML
     private ComboBox<Integer> userComboBox;
 
     @FXML
     private Button addButton;
-
     @FXML
     private TextField appointmentDescription;
-
-
     @FXML
     private ComboBox<String> contactAppointmentCombBox;
-
     @FXML
     private ComboBox<Integer> customerComboBox;
-
     @FXML
     private VBox endTimeText;
-
     @FXML
     private TextField endtTimeText;
-
     @FXML
     private Button exitButton;
-
     @FXML
     private TextField locationAppointmentText;
-
     @FXML
-    private ComboBox<String> hourComboBox;
-
+    private ComboBox<Integer> hourComboBox;
     @FXML
-    private ComboBox<String> hourComboBox1;
+    private ComboBox<Integer> hourComboBox1;
     @FXML
-    private ComboBox<String> secondComboBox;
-
+    private ComboBox<Integer> minutseStert;
     @FXML
-    private ComboBox<String> secondComboBox1;
+    private ComboBox<Integer> minutesEned;
     @FXML
-    private DatePicker endDate;
+    private DatePicker endPickerDate;
     @FXML
-    private DatePicker startDate;
-
+    private DatePicker DatePicker;
     @FXML
     private TextField titleTextField;
-
     @FXML
     private TextField typeAppointmentText;
 
-    ObservableList<String> hours = FXCollections.observableArrayList();
-    ObservableList<String> minutes = FXCollections.observableArrayList();
-
+    ObservableList<Integer> minutes = FXCollections.observableArrayList();
+    /**
+     * initialize will populate the time, date and contact names for each combo, also  user ID and Customer id will<br>
+     * populated for the Database.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -91,17 +95,14 @@ public class ModifyAppointment implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutes.addAll("00", "15", "30", "45");
-        hourComboBox.setItems(hours);
-        secondComboBox.setItems(minutes);
-        hourComboBox1.setItems(hours);
-        secondComboBox1.setItems(minutes);
+        minutes.addAll(0, 15, 30, 45, 59);
+        hourComboBox.setItems(Model.businessTimeStart());
+        minutseStert.setItems(minutes);
+        hourComboBox1.setItems(Model.businessTimeStart());
+        minutesEned.setItems(minutes);
         try {
-        for(int i = 0; i <AppointmentQuery.loadContact().size();i++){
-            contactAppointmentCombBox.getItems().add(AppointmentQuery.loadContact().get(i).getContactName()); }}
+            for(int i = 0; i <AppointmentQuery.loadContact().size();i++){
+                contactAppointmentCombBox.getItems().add(AppointmentQuery.loadContact().get(i).getContactName()); }}
         catch (SQLException throwables) { throwables.printStackTrace(); }
 
 
@@ -109,12 +110,15 @@ public class ModifyAppointment implements Initializable {
         try{ for (int i = 0; i < CustomerQuery.customerDataNew().size();i++){ customerComboBox.getItems().add(CustomerQuery.customerDataNew().get(i).getCustomerID()); }  } catch (SQLException throwables) { throwables.printStackTrace(); }
     }
     @FXML
+    /**
+     * setAppointment will get the selected appointment row information and load it to modify page.
+     */
     public void setAppointment(Appointment appointment) throws SQLException {
 
         LocalDate start = appointment.getStartTimeDate().toLocalDate();
         LocalDate end = appointment.getEndTimeDate().toLocalDate();
-        endDate.setValue(end);
-        startDate.setValue(start);
+        endPickerDate.setValue(end);
+        DatePicker.setValue(start);
         appointmentDescription.setText(appointment.getDescription());
         titleTextField.setText(appointment.getTitle());
         locationAppointmentText.setText(appointment.getLocation());
@@ -122,13 +126,13 @@ public class ModifyAppointment implements Initializable {
         contactAppointmentCombBox.setValue(Model.getContact_Name(appointment.getContactID()));
         typeAppointmentText.setText(String.valueOf(appointment.getType()));
         int hour  = appointment.getStartTimeDate().getHour();
-        int second = appointment.getStartTimeDate().getMinute();
+        int minuteStart = appointment.getStartTimeDate().getMinute();
         int hour1  = appointment.getEndTimeDate().getHour();
-        int second1 = appointment.getEndTimeDate().getMinute();
-        hourComboBox.setValue(String.valueOf(hour));
-        secondComboBox.setValue(String.valueOf(second));
-        secondComboBox1.setValue(String.valueOf(second1));
-        hourComboBox1.setValue(String.valueOf(hour1));
+        int minutesEnd = appointment.getEndTimeDate().getMinute();
+        hourComboBox.setValue(hour);
+        minutseStert.setValue(minuteStart);
+        minutesEned.setValue(minutesEnd);
+        hourComboBox1.setValue(hour1);
         appointmentIDText.setText(String.valueOf(appointment.getAppointmentID()));
         customerComboBox.setValue(appointment.getCustomerID());
         userComboBox.setValue(appointment.getUserID());
@@ -145,11 +149,23 @@ public class ModifyAppointment implements Initializable {
     void appoiitmentDescriptionTextAction(ActionEvent event) {
 
     }
-
+    /**
+     * Description of the method.<br>
+     * Lambda 2 helps in filtering the appointment based on the user id and date. <br>
+     * The meth simplifies the process of obtaining the data of the appointment with minimizing the.<br>
+     * running time. <br>
+     *
+     * appointmentButtonAction will do the following:<br>
+     * Get the user input and convert time and date to LocalDateTime type.<br>
+     * Check if their is an overlap with another appointment if the Customer already has other appointment listed in the day.<br>
+     * Insert the date if their is no overlap with other appointment, if their is an overlap display an alert with the a overlap<br>
+     * appointment.<br>
+     * The for loop will loop the contactless to get it's id
+     *  @param event
+     * @throws SQLException
+     */
     @FXML
     void appointmentButtonAction(ActionEvent event) throws SQLException {
-        DateTimeFormatter appointmentTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-        DateTimeFormatter appointmentDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         int contactNum = -1;
         int appointmentID = Integer.parseInt(appointmentIDText.getText());
@@ -157,16 +173,14 @@ public class ModifyAppointment implements Initializable {
         String description = appointmentDescription.getText();
         String location = locationAppointmentText.getText();
         String type = typeAppointmentText.getText();
-        LocalDate start = startDate.getValue();
-        LocalDate end = endDate.getValue();
-        String hourStart = hourComboBox.getValue();
-        String secondStart = secondComboBox.getValue();
-        String timeOne = hourStart + ":" + secondStart + ":00";
-        Time timeOneConvert = Time.valueOf(timeOne);
-        String hourStart1 = hourComboBox1.getValue();
-        String secondStart1 = secondComboBox1.getValue();
-        String timeTwo = hourStart1 + ":" + secondStart1 + ":00";
-        Time timeTwoConvert = Time.valueOf(timeTwo);
+        LocalDate startDate = DatePicker.getValue();
+        LocalDate endDate = endPickerDate.getValue();
+        int hourStart = hourComboBox.getValue();
+        int minutesStart = minutseStert.getValue();
+        LocalTime startTime = LocalTime.of(hourStart,minutesStart);
+        int hourEnd = hourComboBox1.getValue();
+        int minutesEnd = minutesEned.getValue();
+        LocalTime endTime = LocalTime.of(hourEnd,minutesEnd);
         int customer = customerComboBox.getValue();
         int user = userComboBox.getValue();
 
@@ -178,92 +192,68 @@ public class ModifyAppointment implements Initializable {
 
         int contactID = contactNum;
 
-        LocalDateTime startDateTime = LocalDateTime.of(start.getYear(), start.getMonth(), start.getDayOfMonth(), Integer.parseInt(hourStart), Integer.parseInt(secondStart));
-        LocalDateTime endDateTime = LocalDateTime.of(end.getYear(), end.getMonth(), end.getDayOfMonth(), Integer.parseInt(hourStart1), Integer.parseInt(secondStart1));
+        LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime );
+        LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime );
         boolean test = false;
 
         int appointmentNum = 0;
-        int customerIdAlert = 0;
+
+        // Lambda 2
         FilteredList<Appointment> customerInList = AppointmentQuery.appointmentData_new().filtered(t ->
         { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID; });
-
+        /**
+         * The if condition checks if the appointmentLisT is empty or not.<br>
+         * If not empty then it will processed to the check if there is an overlap between the customer existing<br>
+         * appointment or not.
+         */
         if (customerInList.size() > 0) {
-
             for (int i = 0; i <  customerInList.size(); i++) {
-                customerIdAlert = customerInList.get(i).getAppointmentID();
-                String dateOne = appointmentDate.format(customerInList.get(i).getStartTimeDate());
-                String dateTwo = appointmentDate.format(customerInList.get(i).getEndTimeDate());
-                LocalDate testDateForStart = LocalDate.parse(dateOne);
-                LocalDate testDateForEnd = LocalDate.parse(dateTwo);
 
                 LocalDateTime testStartDate = customerInList.get(i).getStartTimeDate();
                 LocalDateTime testEndDate = customerInList.get(i).getEndTimeDate();
 
-                Time testTimeForStart = Time.valueOf(appointmentTime.format(testStartDate));
-                Time testTimeForEnd = Time.valueOf(appointmentTime.format(testEndDate));
-
-                if (start.equals(testDateForEnd) && end.equals(testDateForStart)) {
-                 if(appointmentID != customerInList.get(i).getAppointmentID() && timeOneConvert != testTimeForStart && timeTwoConvert != testTimeForEnd ){
-
-                       if (timeOneConvert.equals(testTimeForStart) || timeTwoConvert.equals(testTimeForEnd)) {
-                            test = true;
-                            appointmentNum = i;
-                            break;
-                        } else if (timeOneConvert.equals(testTimeForStart) && timeTwoConvert.equals(testTimeForEnd)) {
-                            test = true;
-                            appointmentNum = i;
-                            break;
-                        } else if (timeOneConvert.after(testTimeForStart) && timeTwoConvert.before(testTimeForEnd)) {
-                            test = true;
-                            appointmentNum = i;
-                            break;
-                        } else if (timeTwoConvert.before(testTimeForEnd) && timeTwoConvert.after(testTimeForStart)) {
-                            test = true;
-                            appointmentNum = i;
-                            break;
-                        }
-                    }
-                }
-
-
-                else if (appointmentID == customerInList.get(i).getAppointmentID() && timeOneConvert == testTimeForStart && timeTwoConvert == testTimeForEnd){
-                    String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
-
-                    if(processResult.equals("Success")) {
-                        Alert alertType;
-                        alertType = new Alert(Alert.AlertType.CONFIRMATION);
-                        alertType.setTitle("Insert record states");
-                        alertType.setHeaderText("Modify appointment was successful");
-                        alertType.setContentText("You have modified the appointment successful and updates have been applied ");
-                        alertType.show();
-                    } else {
-                        Alert alertType;
-                        alertType = new Alert(Alert.AlertType.WARNING);
-                        alertType.setTitle("Insert record states");
-                        alertType.setHeaderText("Insert was not successful");
-                        alertType.setContentText("The appointment failed to be modified");
-                        alertType.show();
-                    }
-
-
-                }
-
-
+                if(!(startDateTime.isAfter(testEndDate) || startDateTime.equals(testEndDate)
+                        || endDateTime.isBefore(testStartDate) || endDateTime.equals(testStartDate))){
+                    test = true;
+                    appointmentNum = i;
+                    break;
                 }
 
             }
 
+            /**
+             * if their is an overlap then display an alert.<br.
+             * if not processed to add the new appointment to the database.<br>
+             */
+            if (test == true) {
+                Alert alertType = new Alert(Alert.AlertType.WARNING);
+                alertType.setTitle("Appointment Overlapped");
+                alertType.setHeaderText("This appointment is Overlapping");
+                alertType.setContentText("The appointment is Overlapped with the following appointment \n" + customerInList.get(appointmentNum).getAppointmentID());
+                alertType.show();
+            }
 
+            else {
 
-        if (test == true) {
-            Alert alertType = new Alert(Alert.AlertType.WARNING);
-            alertType.setTitle("Appointment Overlapped");
-            alertType.setHeaderText("This appointment is Overlapping");
-            alertType.setContentText("The appointment is Overlapped with the following appointment \n" + customerIdAlert);
-            alertType.show();
-        }
-        else {
+                String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
 
+                if(processResult.equals("Success")) {
+                    Alert alertType;
+                    alertType = new Alert(Alert.AlertType.CONFIRMATION);
+                    alertType.setTitle("Insert record states");
+                    alertType.setHeaderText("Modify appointment was successful");
+                    alertType.setContentText("You have modified the appointment successful and updates have been applied ");
+                    alertType.show();
+                } else {
+                    Alert alertType;
+                    alertType = new Alert(Alert.AlertType.WARNING);
+                    alertType.setTitle("Insert record states");
+                    alertType.setHeaderText("Insert was not successful");
+                    alertType.setContentText("The appointment failed to be modified");
+                    alertType.show();
+                }
+            }
+        }else{
             String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
 
             if(processResult.equals("Success")) {
@@ -276,22 +266,13 @@ public class ModifyAppointment implements Initializable {
             } else {
                 Alert alertType;
                 alertType = new Alert(Alert.AlertType.WARNING);
-                alertType.setTitle("Insert record states");// line 2
-                alertType.setHeaderText("Insert was not successful");// line 3
-                alertType.setContentText("The appointment failed to be modified");// line 4
+                alertType.setTitle("Insert record states");
+                alertType.setHeaderText("Insert was not successful");
+                alertType.setContentText("The appointment failed to be modified");
                 alertType.show();
             }
         }
-        }
-
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -300,80 +281,66 @@ public class ModifyAppointment implements Initializable {
 
     }
 
+    /**
+     * appointmentExitButtonAction allow the user to exit form the page to the appointment page.
+     * @param event on button will exit the program <br>
+     * @throws IOException
+     */
+
     @FXML
     void appointmentExitButtonAction(ActionEvent event) throws IOException {
         Parent userLogOut = FXMLLoader.load(getClass().getResource("/view/Appointment.fxml"));
         Stage Window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(userLogOut,800,400);
+        Scene scene = new Scene(userLogOut);
         Window.setScene(scene);
         Window.setTitle("Customer page:");
         Window.show();
     }
 
     @FXML
-    void contactCombBoxAction(ActionEvent event) {
+    void contactCombBoxAction() {
 
     }
 
     @FXML
-    void customerIDTextAction(ActionEvent event) {
+    void customerIDTextAction() {
 
     }
 
     @FXML
-    void endDateTextAction(ActionEvent event) {
+    void endTimeTextAction( ){
 
     }
 
     @FXML
-    void endTimeTextAction(MouseEvent event) {
+    void locationAppointmentTextAction() {
 
     }
 
     @FXML
-    void endTimetText(ActionEvent event) {
+    void titleTextAction() {
 
     }
 
     @FXML
-    void locationAppointmentTextAction(ActionEvent event) {
+    void typeAppointmentTextAction() {
 
     }
 
     @FXML
-    void startDateTextActiom(ActionEvent event) {
-
-    }
-
-    @FXML
-    void startTimeTextAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void titleTextAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void typeAppointmentTextAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void endDateAction(ActionEvent event) {
+    void endDateAction() {
     }
     @FXML
-    void startDateAction(ActionEvent event) {
+    void startDateAction() {
     }
     @FXML
-    void hourComboBoxAction1(ActionEvent event) {
+    void hourComboBoxAction1() {
     }
     @FXML
-    void secondComboBoxAction1(ActionEvent event) {
+    void secondComboBoxAction1() {
     }
     @FXML
-    void hourComboBoxAction(ActionEvent event){}
+    void hourComboBoxAction(){}
     @FXML
-    void secondComboBoxAction(ActionEvent event){}
+    void secondComboBoxAction(){}
 }

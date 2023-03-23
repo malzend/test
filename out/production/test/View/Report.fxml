@@ -18,7 +18,7 @@
          <children>
             <Button fx:id="totalCustomerButton" mnemonicParsing="false" onAction="#totalCustomerAction" prefHeight="26.0" prefWidth="169.0" text="Total Customer" />
             <Button fx:id="ScheduleForEachContactButton" mnemonicParsing="false" onAction="#ScheduleForEachContactButton" prefHeight="26.0" prefWidth="168.0" text="Schedule For each Contact " />
-            <Button fx:id="whatToDoButton" mnemonicParsing="false" onAction="#whatToDoButtonAaction" prefHeight="26.0" prefWidth="167.0" text="What  to do" />
+            <Button fx:id="whatToDoButton" mnemonicParsing="false" onAction="#whatToDoButtonAction" prefHeight="26.0" prefWidth="167.0" text="What  to do" />
          </children>
       </VBox>
       <Button fx:id="exitButton" layoutX="563.0" layoutY="321.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="99.0" text="Exit" />

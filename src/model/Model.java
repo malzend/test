@@ -200,7 +200,7 @@ public class Model {
         return null;
     }
 
-   public static ObservableList<Integer> businessTime() {
+   public static ObservableList<Integer> businessTimeStart() {
 
         ObservableList<Integer> list =FXCollections.observableArrayList();
 
@@ -215,17 +215,40 @@ public class Model {
 
        int start = osZDT.getHour();
        int midnight = 0;
-       for(int i = start; i <= start+14;i++){
+       for(int i = start; i <= start+13;i++){
            if(i<24){
              list.add(i);
            }
            else if(i>23){
                list.add(midnight++);
            }
-
-
-
        }
        return list;
     }
+
+//    public static ObservableList<Integer> businessTimeEnd() {
+//
+//        ObservableList<Integer> list =FXCollections.observableArrayList();
+//
+//        LocalDateTime estLDT = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,0));
+//        ZoneId estZID = ZoneId.of("America/New_York");
+//        ZonedDateTime estZDT = ZonedDateTime.of(estLDT,estZID);
+//        ZoneId osZID = ZoneId.systemDefault();
+//
+//        ZonedDateTime osZDT = ZonedDateTime.ofInstant(estZDT.toInstant(), osZID);
+//        System.out.println(estZDT);
+//        System.out.println(osZDT);
+//
+//        int start = osZDT.getHour();
+//        int midnight = 0;
+//        for(int i = start; i <= start+13;i++){
+//            if(i<24){
+//                list.add(i);
+//            }
+//            else if(i>23){
+//                list.add(midnight++);
+//            }
+//        }
+//        return list;
+//    }
 }

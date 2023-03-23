@@ -19,66 +19,67 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+/**
+ * AppointmentController will do the following:
+ * Data will be loaded to the appointments table for the database.<br>
+ * A user can add an appointment for a new or existing customer to the database .<br>
+ * Appointment can be modified.<br>
+ * A user can delete an appointment for a customer,<br>
+ * Appointments will be checked for overlaps.<br>
+ */
 public class AppointmentController implements Initializable {
+    /**
+     * <br>
+     * FXML id selectors <br>
+     * <br>
+     * selectors used to read or set form fields <br>
+     */
     @FXML
-    private TableColumn<Appointment, Date> endDareColumn;
-
-    @FXML
-    private TableColumn<Appointment, Date> startDateColumn;
+    private RadioButton allRadio;
     @FXML
     private TableColumn<Appointment, Integer> appointmentIDColumn;
-
     @FXML
     private TableColumn<Appointment, String> contactColumn;
-
     @FXML
     private TableColumn<Appointment, Integer> customerIDColumn;
-
     @FXML
     private TableColumn<Appointment, String> descriptionColumn;
-
     @FXML
     private TableColumn<Appointment, String> endTimeColumn;
     @FXML
     private TableColumn<Appointment, String> startTimeColumn;
-
     @FXML
     private TableColumn<Appointment, String> titleColumn;
-
     @FXML
     private TableColumn<Appointment, String> typeColumn;
-
     @FXML
     private TableColumn<Appointment, Integer> userIDColumn;
     @FXML
     private TableColumn<Appointment, String> locationColumn;
-
     @FXML
     private Button addAppointmentButton;
-
     @FXML
     private Button exitModifyButton;
-
     @FXML
     private Button modifyAppointmentButton;
-
     @FXML
     private TableView<Appointment> modifyAppointmentTable;
-
-    @FXML
-    private Button moditydeleteButton;
     @FXML
     private RadioButton radioByWeek ;
     @FXML
     private RadioButton radioByMonthAction ;
 
+    /**
+     * initialize will be used to load date to the appointments for the database.<br>
+     * @param location
+     * @param resource
+     */
     @FXML
     public void initialize(URL location, ResourceBundle resource) {
-
         try {
             modifyAppointmentTable.setItems(AppointmentQuery.appointmentData_new());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
        titleColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Title"));
@@ -91,31 +92,44 @@ public class AppointmentController implements Initializable {
        userIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("UserID"));
        customerIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
        contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contactID"));
-
-
     }
 
+    /**
+     * addAppointmentAction will load the Customer.fxml page.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void addAppointmentAction(ActionEvent event) throws IOException {
         Parent customerPage = FXMLLoader.load(getClass().getResource("/View/Customer.fxml"));
-        Scene scene = new Scene(customerPage,600,521);
+        Scene scene = new Scene(customerPage);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.setTitle("LogIn page:");
         window.show();
     }
 
+    /**
+     * exitButtonAction will load the User.fxml page.
+     * @param event on button will exit the program <br>
+     * @throws IOException
+     */
     @FXML
     void exitButtonAction(ActionEvent event) throws IOException {
         Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.fxml"));
-        Scene scene = new Scene(customerPage,600,400);
+        Scene scene = new Scene(customerPage);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.setTitle("LogIn page:");
         window.show();
     }
 
-
+    /**
+     * modifyAppointmentAction will load the ModifyAppointment.fxml page and send the appointment data form the appointment table<br>
+     * to modify page.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void modfiyAppointmentAction(ActionEvent event) throws IOException {
         try {
@@ -142,6 +156,11 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * modifydeleteAction will get the selected row appointment id and delete it via sql query that is stored in the appointment query.<br>
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void modifydeleteAction(ActionEvent event) throws SQLException {
         try {
@@ -152,6 +171,9 @@ public class AppointmentController implements Initializable {
             System.out.print(selectedItem);
             String processResult = AppointmentQuery.appointmentDelete(selectedID);
             Alert alertType;
+            /**
+             * If processResult is true the the alert will display successful delete if not then the alert will display not successful.<br>
+             */
             if (processResult == "Success") {
                 alertType = new Alert(Alert.AlertType.CONFIRMATION);
                 alertType.setTitle("Deleting record states");
@@ -172,12 +194,10 @@ public class AppointmentController implements Initializable {
             alert.show();
 
         }
-
-        try {
-            modifyAppointmentTable.setItems(AppointmentQuery.appointmentData_new());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        /**
+         * The table will be refreshed with the new data set for the database.<br>
+         */
+        modifyAppointmentTable.setItems(AppointmentQuery.appointmentData_new());
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Description"));
@@ -196,8 +216,14 @@ public class AppointmentController implements Initializable {
     @FXML
      void modifyAppointmentAction() {
     }
+
+    /**
+     * radioByWeekAction will filter the appointment by current week using AppointmentQuery.appointmentsByWeek().<br>
+     * @param event
+     * @throws SQLException
+     */
     @FXML
-    void radioByWeekActioin(ActionEvent event) throws SQLException {
+    void radioByWeekAction(ActionEvent event) throws SQLException {
         if(radioByWeek.isSelected()){
             modifyAppointmentTable.setItems(AppointmentQuery.appointmentsByWeek());
             appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
@@ -229,10 +255,15 @@ public class AppointmentController implements Initializable {
             contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contactID"));
         }
     }
+
+    /**
+     * RadioByMonthAction will filter the table by current month via AppointmentQuery.appointmentsByMonth().<br>
+     * @throws SQLException
+     */
     @FXML
     void RadioByMonthAction() throws SQLException {
         if(radioByMonthAction.isSelected()){
-            modifyAppointmentTable.setItems(AppointmentQuery.appointmentsByWeek());
+            modifyAppointmentTable.setItems(AppointmentQuery.appointmentsByMonth() );
             appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
             titleColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Title"));
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Description"));
@@ -261,5 +292,45 @@ public class AppointmentController implements Initializable {
             customerIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
             contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contactID"));
         }
+    }
+
+    /**
+     * allRadioAction will load all data back.<br>
+     * @throws SQLException
+     */
+    @FXML
+    void allRadioAction() throws SQLException {
+
+        if(radioByMonthAction.isSelected()){
+            modifyAppointmentTable.setItems(AppointmentQuery.appointmentData_new() );
+            appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Title"));
+            descriptionColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Description"));
+            locationColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String >("Location"));
+            typeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String >("Type"));
+            contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Contact"));
+            startTimeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("startTimeDate"));
+            endTimeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("EndTimeDate"));
+            userIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("UserID"));
+            customerIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+            contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contactID"));
+
+        }else
+        {
+            radioByMonthAction.setSelected(false);
+            modifyAppointmentTable.setItems(AppointmentQuery.appointmentData_new());
+            appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("AppointmentID"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Title"));
+            descriptionColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Description"));
+            locationColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String >("Location"));
+            typeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String >("Type"));
+            contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("Contact"));
+            startTimeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("startTimeDate"));
+            endTimeColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("EndTimeDate"));
+            userIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("UserID"));
+            customerIDColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("customerID"));
+            contactColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("contactID"));
+        }
+
     }
 }

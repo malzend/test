@@ -9,7 +9,23 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * AppointmentQuery will do the following:<br>
+ * Load the Appointment data form the dataBase.<br>
+ * Insert the appointment to date base.<br>
+ * Delete the appointment form database .<br>
+ * Update the appointment from the database.<br>
+ * Filter appointment by week and month.<br>
+ * Load user data and customer data.<br>
+ *
+ */
 public class AppointmentQuery {
+    /**
+     * appointmentData_new will return all the appointment that are stored in the database.<br>
+     * The methode establishes database connection and the send sql query to get the data.<br>
+     * @return  an ObservableList of type appointment will be returned.<br>
+     * @throws SQLException
+     */
 
     public static ObservableList<Appointment> appointmentData_new() throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
@@ -35,6 +51,13 @@ public class AppointmentQuery {
         return  list;
     }
 
+    /**
+     * appointmentDelete methode deletes an appointment from the database via delete sql query.<br>
+     * The sql then returns Success if process is completed and Not successful if it's false.<br>
+     * @param appointmentID
+     * @return
+     * @throws SQLException
+     */
 
     public static String appointmentDelete(int appointmentID) throws SQLException {
         String goodDelete = "Success";
@@ -52,6 +75,21 @@ public class AppointmentQuery {
         }
     }
 
+    /**
+     * appointmentAdd methode add new information to database via Insert query.,br>
+     * The LocalDateTime variables are converted to Timestamp.<br>
+     * @param Title
+     * @param Description
+     * @param Location
+     * @param Type
+     * @param start
+     * @param end
+     * @param customerID
+     * @param userID
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
     public static String appointmentAdd(String Title, String Description, String Location, String Type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) throws SQLException {
 
         Timestamp startTimestamp = Timestamp.valueOf(start);
@@ -78,47 +116,22 @@ public class AppointmentQuery {
         }
     }
 
-    public static String appointmentAddEmpty() throws SQLException {
-        LocalDateTime time = LocalDateTime.now();
-        String goodInsert = "Success";
-        String badInsert = "Not successful ";
-        //DateTimeFormatter formattTimeStamp = DateTimeFormatter.ofPattern(" yyyy-mm-dd hh:mm:ss[.fffffffff]");
-        Timestamp valueOne = Timestamp.valueOf(time);
-        Timestamp valueTwo = Timestamp.valueOf(time);
-        String customerAdd = "INSERT INTO appointments (Title, Description, location, Type , Start ,End, User_ID, Customer_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(customerAdd);
-        ps.setString(1, "t");
-        ps.setString(2, "t");
-        ps.setString(3, "t");
-        ps.setString(4, "");
-        ps.setTimestamp(5, valueOne);
-        ps.setTimestamp(6, valueTwo);
-        ps.setInt(7, 1);
-        ps.setInt(8, 1);
-        ps.setInt(9, 1);
-        int insertResult = ps.executeUpdate();
-        if (insertResult > 0) {
-            return goodInsert;
-        } else {
-            return badInsert;
-        }
-    }
-    public static String appointmentDeleteEmpty() throws SQLException {
-        String goodDelete = "Success";
-        String badDelete = "Not successful";
-
-        String customerDelete = "DELETE FROM appointments WHERE Start IS ? ";
-        PreparedStatement ps = JDBC.connection.prepareStatement(customerDelete);
-        ps.setTimestamp(1, null);
-        int deleteResult = ps.executeUpdate();
-
-        if (deleteResult > 0) {
-            return goodDelete;
-        } else {
-            return badDelete;
-        }
-    }
-
+    /**
+     * updateAppointment methode updates appointment information when called.<br>
+     * The sql then returns Success if process is completed and Not successful if it's false.<br>
+     * @param Appointment_ID
+     * @param Title
+     * @param Description
+     * @param Location
+     * @param Type
+     * @param start
+     * @param end
+     * @param userID
+     * @param customerID
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
     public static String updateAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime start, LocalDateTime end, int userID,  int customerID,int contactID) throws SQLException {
         Timestamp startTimestamp = Timestamp.valueOf(start);
         Timestamp endTimestamp = Timestamp.valueOf(end);
@@ -147,6 +160,12 @@ public class AppointmentQuery {
         }
     }
 
+    /**
+     * loadContact method loads contact information when called .<br>
+     * The methode return an ObservableList of type Contact.<br>
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Contact> loadContact() throws SQLException {
         ObservableList<Contact> list = FXCollections.observableArrayList();
         String customerData = "SELECT * FROM contacts";
@@ -163,6 +182,12 @@ public class AppointmentQuery {
         return list;
     }
 
+    /**
+     * loadUserData a method that will load user information from the database.<br>
+     * SELECT query is used to select the necessary information form database.<br>
+     * @param userName
+     * @throws SQLException
+     */
     public static void loadUserData(String userName) throws SQLException {
         String userData = "SELECT * FROM users WHERE User_Name = ?";
         PreparedStatement sl = JDBC.connection.prepareStatement(userData);
@@ -178,21 +203,12 @@ public class AppointmentQuery {
         }
     }
 
-    public static int leastappointmentID() throws SQLException {
-
-        int appointment_ID = 0;
-        String customerData = "SELECT * FROM appointments WHERE Appointment_ID =(SELECT MAX(Appointment_ID) FROM appointments); ";
-        PreparedStatement sl = JDBC.connection.prepareStatement(customerData);
-        ResultSet rl = sl.executeQuery();
-        while (rl.next()) {
-            appointment_ID = rl.getInt("Appointment_ID");
-
-        }
-
-        return appointment_ID;
-    }
-
-
+    /**
+     * joinTypeMonth the method will creates an sql query that inner joins appointments table <br>
+     * and displays the all type of appointment and the month that it accrued in.
+     * @return an int.
+     * @throws SQLException
+     */
     public static void joinTypeMonth(String month, String type) throws SQLException {
         String joinedTable = "SELECT t1.Type AS Type, t2.Start AS Month, COUNT(t1.Type) AS Number FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID AND MONTH(t1.Start) = ?  AND  t1.Type = ? GROUP BY t1.Appointment_ID;";
         PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
@@ -210,8 +226,13 @@ public class AppointmentQuery {
 
     }
 
+    /**
+     * loadTypeMonth the method will creates an sql query that inner joins appointments table <br>
+     * and returns how many times a type accrued in a month. This will to help in determine the<br>
+     * total of appointment type.<br>
+     * @throws SQLException
+     */
     public static void loadTypeMonth() throws SQLException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyy-MM-dd");
         String joinedTable = "SELECT t1.Type AS Type, t2.Start AS Month, sum(t1.Type) AS Number FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID GROUP BY t1.Appointment_ID;";
         PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
         ResultSet rl = ps.executeQuery();
@@ -222,6 +243,14 @@ public class AppointmentQuery {
 
         }
     }
+
+    /**
+     * customerContact this methode return a list of appointment type via SELECT Query<br>
+     * and then add the lise to Appointment class.<br>
+     * @param contactID
+     * @return a ObservableList of Appointment type.<br>
+     * @throws SQLException
+     */
 
     public static ObservableList<Appointment> customerContact(int contactID) throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
@@ -245,7 +274,43 @@ public class AppointmentQuery {
         }
         return list;
     }
+
+    /**
+     * appointmentsByWeek filter appointment by the current week using select query.
+     * @return a ObservableList of Appointment type.<br>
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> appointmentsByWeek() throws SQLException {
+        ObservableList<Appointment> list = FXCollections.observableArrayList();
+
+        String customerData = "select * from appointments where MONTH(Start) = MONTH(now()) and YEAR(Start) = YEAR(now());";
+        PreparedStatement sl = JDBC.connection.prepareStatement(customerData);
+        ResultSet rl = sl.executeQuery();
+        while (rl.next()) {
+
+            int Appointment_ID = rl.getInt("Appointment_ID");
+            String Title = rl.getString("Title");
+            String Description = rl.getString("Description");
+            String Location = rl.getString("Location");
+            String Type = rl.getString("Type");
+            LocalDateTime startTimeStamp = rl.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTimeStamp = rl.getTimestamp("End").toLocalDateTime();
+            int userID = rl.getInt("User_ID");
+            int customerID = rl.getInt("Customer_ID");
+            int contactID = rl.getInt("Contact_ID");
+
+            list.add(new Appointment(Appointment_ID, Title, Description, Location, Type, startTimeStamp, endTimeStamp, userID, customerID, contactID));
+        }
+        return  list;
+    }
+
+    /**
+     * appointmentsByMonth filter appointment by the current month using select query.
+     * @return a ObservableList of Appointment type.<br>
+     * @throws SQLException
+     */
+
+    public static ObservableList<Appointment> appointmentsByMonth() throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
 
         String customerData = "Select * from appointments where Start between date_sub(now(), interval 7 day) and date_add(curdate(), interval 7 day)";
@@ -268,29 +333,9 @@ public class AppointmentQuery {
         }
         return  list;
     }
-
-
 }
 
 
-/*
-    public static String customerDelete(int customerID) throws SQLException {
-        String goodDelete = "Success";
-        String badDelete = "Not successful";
 
-        String customerDelete = "DELETE FROM customers WHERE Customer_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(customerDelete);
-        ps.setInt(1, customerID);
-        int deleteResult = ps.executeUpdate();
-
-        if (deleteResult > 0) {
-            return goodDelete;
-        } else {
-            return badDelete;
-        }
-    }
-
-
-*/
 
 
