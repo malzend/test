@@ -32,16 +32,10 @@ public class addCustomerController implements Initializable {
      * selectors used to read or set form fields <br>
      */
     @FXML
-    private Button addButton;
-
-    @FXML
     private javafx.scene.control.TextField addressTextBox;
 
     @FXML
     private ComboBox<String> countryTextBox;
-
-    @FXML
-    private javafx.scene.control.TextField customerIdTextBox;
 
     @FXML
     private javafx.scene.control.TextField customerTextBox;
@@ -61,41 +55,40 @@ public class addCustomerController implements Initializable {
      * @param resource
      */
     @FXML
-   public void initialize(URL location, ResourceBundle resource) {
+    public void initialize(URL location, ResourceBundle resource) {
 
 
-     try{
-        for(int i = 0; i < CustomerQuery.countryDATA().size();i++){
-            countryTextBox.getItems().add( Model.getCountryName(i)); }}
-     catch (SQLException throwables){
-         throwables.printStackTrace();
-     }
+        try{
+            for(int i = 0; i < CustomerQuery.countryDATA().size();i++){
+                countryTextBox.getItems().add( Model.getCountryName(i)); }}
+        catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
     }
 
     /**
      * addButtonAction will add a new user with the given input from the user.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void addButtonAction() throws SQLException {
         String customerName = customerTextBox.getText();
         String address = addressTextBox.getText();
-        String postalCode = addressTextBox.getText();
+        String postalCode = postalCodeTextBox.getText();
         String phoneNumber = phoneNumberTextBox.getText();
         int test = firstLevelDivisionCombBox.getValue().getDivisionID();
 
-      String processResult =  CustomerQuery.customerAdd(customerName, address,postalCode, phoneNumber, test);
-
-      /**
-      * the if condition will check if the processResult is ture or false.<br>
-      * if false then it will display not successful if ture it will display successful.<br>
-       * */
+        String processResult =  CustomerQuery.customerAdd(customerName, address,postalCode, phoneNumber, test);
+        /**
+         * the if condition will check if the processResult is ture or false.<br>
+         * if false then it will display not successful if ture it will display successful.<br>
+         * */
         if(processResult.equals("Success") ){
-         Alert alertType= new Alert(Alert.AlertType.CONFIRMATION);
-         alertType.setTitle("Insert record states");
-         alertType.setHeaderText("Insert was successful");
-         alertType.setContentText("You have Inserted a new customer record");
-         alertType.show();
+            Alert alertType= new Alert(Alert.AlertType.CONFIRMATION);
+            alertType.setTitle("Insert record states");
+            alertType.setHeaderText("Insert was successful");
+            alertType.setContentText("You have Inserted a new customer record");
+            alertType.show();
         } else {
             Alert alertType=new Alert(Alert.AlertType.WARNING);
             alertType.setTitle("Insert record states");
@@ -104,17 +97,12 @@ public class addCustomerController implements Initializable {
             alertType.show();
         }
     }
-
-    @FXML
-    void addressTextBoxAction(ActionEvent event) { }
-
     /**
-     * coutryTextBoxAction returns the user selection of a country and stores it in a variables.<br>
-     * @param event
-     * @throws SQLException
+     * countryTextBoxAction returns the user selection of a country and stores it in a variables.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
-    void coutryTextBoxAction(ActionEvent event) throws SQLException {
+    void countryTextBoxAction() throws SQLException {
         Model.removeFilterDivision();
         SingleSelectionModel<String> country = countryTextBox.getSelectionModel();
 
@@ -124,26 +112,10 @@ public class addCustomerController implements Initializable {
         firstLevelDivisionCombBox.setItems(Model.getFilterDivision());
     }
 
-    @FXML
-    void customerIdTextBoxAction()  { }
-
-    @FXML
-    void customerTextBoxAction(ActionEvent event) { }
-
-    @FXML
-    void firstLevelDivisionTextBoxAction(ActionEvent event) {
-    }
-
-    @FXML
-    void phoneNumberTextBoxAction(ActionEvent event) { }
-
-    @FXML
-    void postalCodeTextBoxCtion(ActionEvent event) { }
-
     /**
      * exitButtonAction will load the User.fxml page.
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws SQLException when an invalid query process accrue.<br>
      *
      */
     @FXML

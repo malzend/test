@@ -19,9 +19,9 @@ import java.sql.SQLException;
 
 public class UserQuery {
     /**
-     * userData loads user data from the database using a select Query.
-     * @return a list of user type
-     * @throws SQLException
+     * userData loads user data from the database using a select Query.<br>
+     * @return an ObservableList of User type.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static ObservableList<User> userData() throws SQLException {
         ObservableList<User> list = FXCollections.observableArrayList();
@@ -39,9 +39,9 @@ public class UserQuery {
     }
 
     /**
-     * getUser a method that is used to return user id
-     * @param name
-     * @return user id if the if condition is true else 0.
+     * getUser a method that is used to return user id.<br>
+     * @param name set Name in the if condition.<br>
+     * @return user id if the if condition is true else 0.<br>
      */
     public static int getUser(String name){
         for(User u: Model.getUser()){
@@ -50,11 +50,5 @@ public class UserQuery {
         }
         return  0;
     }
-//    public static int getUserID(int id){
-//        for(User u: Model.getUser()){
-//            if(u.getUserID() == id)
-//                return  u.getUserID();
-//        }
-//        return  0;
-//    }
+
 }

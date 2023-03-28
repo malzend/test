@@ -17,16 +17,15 @@ import java.sql.SQLException;
  * Insert new customer record.<br>
  * Delete customer record.<br>
  * Modify customer record.<br>
- * Load an associated date for customer like division.
- *
+ * Load an associated date for customer like division.<br>
  */
 
 public class CustomerQuery {
     /***
      * customerDataNew this method handled the process of getting the data and loading in to<br>
      * Customer table using a SELECT query.<br>
-     * @return a list of Customer type
-     * @throws SQLException
+     * @return an ObservableList of Customer type.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static ObservableList<Customer> customerDataNew() throws SQLException {
         ObservableList<Customer> list = FXCollections.observableArrayList();
@@ -50,14 +49,14 @@ public class CustomerQuery {
     }
 
     /**
-     * customerAdd
-     * @param customerName
-     * @param address
-     * @param postalCode
-     * @param phone
-     * @param divisionID
-     * @return
-     * @throws SQLException
+     * customerAdd a method that insert customer information in database using INSERT INTO sql query.<br>
+     * @param customerName set Customer_Name in sql query.<br>
+     * @param address set Address in sql query.<br>
+     * @param postalCode set Postal_Code in sql query.<br>
+     * @param phone set Phone in sql query.<br>
+     * @param divisionID set Division_ID in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static String customerAdd( String customerName, String address, String postalCode, String phone, int divisionID) throws SQLException {
@@ -79,10 +78,10 @@ public class CustomerQuery {
     }
 
     /**
-     * customerDelete deletes the customer record from the database using a DELETER Query.
-     * @param customerID
-     * @return Success if the process was completed and return not successful if not
-     * @throws SQLException
+     * customerDelete deletes the customer record from the database using a DELETER Query.<br>
+     * @param customerID set Customer_ID in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static String customerDelete(int customerID) throws SQLException {
         String goodDelete = "Success";
@@ -101,13 +100,13 @@ public class CustomerQuery {
     }
     /**
      * updateCustomer is a method used to update customer information in the database Using a SELECT Query.<br>
-     * @param customerID
-     * @param customerName
-     * @param address
-     * @param postalCode
-     * @param phone
-     * @return
-     * @throws SQLException
+     * @param customerID set Customer_ID in sql query.<br>
+     * @param customerName set Customer_Name in sql query.<br>
+     * @param address set Address in sql query.<br>
+     * @param postalCode set Postal_Code in sql query.<br>
+     * @param phone set Phone in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static String updateCustomer(int customerID, String customerName, String address, String postalCode, String phone) throws SQLException{
         String goodDelete = "Success";
@@ -131,10 +130,10 @@ public class CustomerQuery {
     /**
      * updateDivision is a methode the updateDivision in a customer record when a division is changed.<br>
      * The method used a Update method to update the division filed in a customer.<br>
-     * @param customerID
-     * @param divisionID
-     * @return
-     * @throws SQLException
+     * @param customerID set Customer_ID in sql query.<br>
+     * @param divisionID set Division_ID in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static String updateDivision(int customerID, int divisionID) throws SQLException{
@@ -155,8 +154,8 @@ public class CustomerQuery {
 
     /**
      * countryDATA loads the county date from the database using a SELECT method.<br>
-     * @return list of a type Country,<br>
-     * @throws SQLException
+     * @return an ObservableList of a type Country,<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static ObservableList<Country> countryDATA() throws SQLException {
         ObservableList<Country> list = FXCollections.observableArrayList();
@@ -176,7 +175,7 @@ public class CustomerQuery {
 
     /**
      * firstLevelDivisionData is a method that uses SELECT query to get th division id for the database.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static void firstLevelDivisionData() throws SQLException {

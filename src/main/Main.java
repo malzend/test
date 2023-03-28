@@ -1,19 +1,10 @@
 package main;
 
-import controller.LogInController;
-import helper.CustomerQuery;
-import helper.JDBC;
-import helper.LogIn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.sql.SQLException;
-import java.time.*;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class Main extends Application {
 
@@ -30,7 +21,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("fr","FR"));
+       // Locale.setDefault(new Locale("fr","FR"));
 
         launch(args);
 

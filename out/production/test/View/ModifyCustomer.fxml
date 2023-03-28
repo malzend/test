@@ -22,19 +22,19 @@
       </VBox>
       <VBox layoutX="190.0" layoutY="69.0" prefHeight="242.0" prefWidth="155.0" style="-fx-spacing: 10;">
          <children>
-            <TextField fx:id="customerTextBox" onAction="#customerTextBoxAction" />
-            <TextField fx:id="addressTextBox" onAction="#addressTextBoxAction" prefHeight="26.0" prefWidth="122.0" />
-            <TextField fx:id="postalCodeTextBox" onAction="#postalCodeTextBoxCtion" />
-            <TextField fx:id="phoneNumberTextBox" onAction="#phoneNumberTextBoxAction" />
-            <TextField fx:id="customerIdTextBox" disable="true" onAction="#customerIdTextBoxAction" />
-            <ComboBox fx:id="firstLevelDivisionCombBox" onAction="#firstLevelDivisionTextBoxAction" prefWidth="150.0" />
+            <TextField fx:id="customerTextBox"  />
+            <TextField fx:id="addressTextBox"  prefHeight="26.0" prefWidth="122.0" />
+            <TextField fx:id="postalCodeTextBox"  />
+            <TextField fx:id="phoneNumberTextBox"  />
+            <TextField fx:id="customerIdTextBox" disable="true"  />
+            <ComboBox fx:id="firstLevelDivisionCombBox" prefWidth="150.0" />
             <ComboBox fx:id="countryComboBox" onAction="#countryTextBoxAction" prefWidth="150.0" />
          </children>
       </VBox>
       <VBox layoutX="376.0" layoutY="238.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#modifyButtonAction" prefHeight="0.0" prefWidth="99.0" text="Modify" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#modifyButtonAction" prefHeight="0.0" prefWidth="99.0" text="Modify" />
+            <Button mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
          </children>
       </VBox>
    </children>

@@ -11,7 +11,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name:" wrappingWidth="91.9140625" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="95.41748046875" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" wrappingWidth="93.22900390625" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Numbe:r " />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Level Division:" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
@@ -19,18 +19,18 @@
       </VBox>
       <VBox layoutX="180.0" layoutY="59.0" prefHeight="242.0" prefWidth="155.0" style="-fx-spacing: 10;">
          <children>
-            <TextField fx:id="customerTextBox" onAction="#customerTextBoxAction" prefHeight="26.0" prefWidth="119.0" />
-            <TextField fx:id="addressTextBox" onAction="#addressTextBoxAction" />
-            <TextField fx:id="postalCodeTextBox" onAction="#postalCodeTextBoxCtion" />
-            <TextField fx:id="phoneNumberTextBox" onAction="#phoneNumberTextBoxAction" />
-            <TextField fx:id="customerIdTextBox" disable="true" onAction="#customerIdTextBoxAction" text="Auto Generated " />
-            <ComboBox fx:id="firstLevelDivisionCombBox" onAction="#firstLevelDivisionTextBoxAction" prefWidth="150.0" />
-            <ComboBox fx:id="countryTextBox" onAction="#coutryTextBoxAction" prefWidth="150.0" />
+            <TextField fx:id="customerTextBox" prefHeight="26.0" prefWidth="119.0" />
+            <TextField fx:id="addressTextBox"  />
+            <TextField fx:id="postalCodeTextBox" />
+            <TextField fx:id="phoneNumberTextBox" />
+            <TextField  disable="true"  text="Auto Generated " />
+            <ComboBox fx:id="firstLevelDivisionCombBox"  prefWidth="150.0" />
+            <ComboBox fx:id="countryTextBox" onAction="#countryTextBoxAction" prefWidth="150.0" />
          </children>
       </VBox>
       <VBox layoutX="366.0" layoutY="228.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add Customer " />
+            <Button mnemonicParsing="false" onAction="#addButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add Customer " />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
          </children>
       </VBox>

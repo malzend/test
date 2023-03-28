@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.crypto.NoSuchPaddingException;
 import java.io.FileWriter;
@@ -63,12 +64,9 @@ public class LogInController implements Initializable {
     @FXML
     private TextField passWordTxt;
     @FXML
-    private TextField timeZoneTextBox;
-    @FXML
     private TextField userNameTxt;
 
     private ResourceBundle rb = ResourceBundle.getBundle("language", Locale.getDefault());
-
     /** initialize<br>
      * Loads necessary ZoneID translates login text that are going to be used in the GUI form.<br>
      * Translate text to system language.<br>
@@ -78,25 +76,26 @@ public class LogInController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Locale.setDefault(new Locale("en","US"));
+       //Locale.setDefault(new Locale("fr","FR"));
+      // Locale.setDefault(new Locale("en","US"));
+        if(Locale.getDefault().equals(Locale.FRANCE)){
         timeZoneLabel.setText(ZoneId.systemDefault().toString());
         userNameLabel.setText(rb.getString("username"));
         passwordLabel.setText(rb.getString("password"));
         loginButton.setText(rb.getString("login"));
         loginLabel.setText(rb.getString("login"));
-    }
+       System.out.println(Locale.getDefault());}else{
+            timeZoneLabel.setText(ZoneId.systemDefault().toString());}
+       }
 
     /**
      * Description of the method.<br>
      * Lambda 1 helps in filtering the upcoming appointments via comparing the customer ID and the user assigned to it.<br>
      * This Lambda helps getting the upcoming appointment with less code writing, reduces the time when the code is implemented. <br>
      *
-     * @param event
-     * @throws IOException
-     * @throws SQLException
-     * @throws NoSuchPaddingException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
+     * @param event load the user page and check for upcoming appointment when clicked.<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void LogIn(ActionEvent event) throws IOException, SQLException{
@@ -125,7 +124,6 @@ public class LogInController implements Initializable {
             FileWriter file = new FileWriter("activityLogin.txt",true);
             file.write("Successful login: "+ LocalDateTime.now()+ "\n");
             file.close();
-
             try {
                 CustomerQuery.countryDATA();
                 CustomerQuery.firstLevelDivisionData();
@@ -177,8 +175,6 @@ public class LogInController implements Initializable {
 
                 alertAppointment.showAndWait();
             }
-
-
             Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.fxml"));
             Scene scene = new Scene(customerPage, 600, 400);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -191,7 +187,7 @@ public class LogInController implements Initializable {
          * display.<br>
          */
         else {
-            Locale.setDefault(new Locale("en","US"));
+           // Locale.setDefault(new Locale("en","US"));
             FileWriter file = new FileWriter("activityLogin.txt",true);
             file.write("Noun-Successful login: "+ LocalDateTime.now()+"\n");
             file.close();
@@ -205,13 +201,5 @@ public class LogInController implements Initializable {
             alert1.show();
         }
     }
-
-    @FXML
-    void SendpassWord(ActionEvent event) { }
-
-    @FXML
-    void sendUserName(ActionEvent event) { }
-
-
 
 }

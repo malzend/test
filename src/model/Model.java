@@ -8,8 +8,9 @@ import javafx.collections.ObservableList;
 import java.sql.SQLException;
 import java.time.*;
 
-//import org.jetbrains.annotations.Nullable;
-
+/**
+ *
+ */
 public class Model {
 
     private static final ObservableList<User> USERS = FXCollections.observableArrayList();
@@ -18,12 +19,14 @@ public class Model {
     private static final ObservableList<FirstLevelDivision> FirstLevelDivision = FXCollections.observableArrayList();
     private static final ObservableList<Contact> CONTACTS = FXCollections.observableArrayList();
     private static final ObservableList<Customer> CUSTOMERS = FXCollections.observableArrayList();
-    private static final ObservableList<Report> REPORT = FXCollections.observableArrayList();
+   // private static final ObservableList<Report> REPORT = FXCollections.observableArrayList();
     private static final ObservableList<FirstLevelDivision> filterDivision = FXCollections.observableArrayList();
 
 
-
-
+    /**
+     *
+     * @return
+     */
     public static ObservableList<Customer> getCustomer() {
         return CUSTOMERS;
     }
@@ -32,33 +35,32 @@ public class Model {
 
     public static ObservableList<User> getUser() { return USERS; }
 
-    public static ObservableList<Contact> getContacts() { return CONTACTS; }
-
-    public static ObservableList<FirstLevelDivision> getFirstLevelDivisions() { return FirstLevelDivision; }
+//    public static ObservableList<Contact> getContacts() { return CONTACTS; }
+//
+//    public static ObservableList<FirstLevelDivision> getFirstLevelDivisions() { return FirstLevelDivision; }
 
     public static ObservableList<FirstLevelDivision> getFilterDivision() { return filterDivision; }
 
-    public static ObservableList<Appointment> getAppointments() { return APPOINTMENTS; }
+//    public static ObservableList<Appointment> getAppointments() { return APPOINTMENTS; }
+//
+//    public static ObservableList<Report> getReport() { return REPORT; }
 
-    public static ObservableList<Report> getReport() { return REPORT; }
 
 
-
-    public static void addCustomer(Customer customer) { CUSTOMERS.add(customer); }
+//    public static void addCustomer(Customer customer) { CUSTOMERS.add(customer); }
 
     public static void addUser(User user) { USERS.add(user);}
 
-    public static void addContact(Contact contact){ CONTACTS.add(contact);}
+//    public static void addContact(Contact contact){ CONTACTS.add(contact);}
 
-    public static void addAppointment(Appointment appointment) { APPOINTMENTS.add(appointment); }
+//    public static void addAppointment(Appointment appointment) { APPOINTMENTS.add(appointment); }
 
     public static void addFirstLevelDivision(FirstLevelDivision firstLevelDivision){ FirstLevelDivision.add(firstLevelDivision); }
 
 
+//    public static void addReport(Report report) {  REPORT.add(report); }
 
-    public static void addReport(Report report) {  REPORT.add(report); }
-
-    public static void removeCustomer(Customer customer) { CUSTOMERS.remove(customer); }
+//    public static void removeCustomer(Customer customer) { CUSTOMERS.remove(customer); }
 
     public static void removeAllCustomer() { CUSTOMERS.clear(); }
 
@@ -67,14 +69,14 @@ public class Model {
     public static void removeAllContact() { CONTACTS.clear(); }
 
     public static void removeAllUser() { USERS.clear();}
-
-    public static void removeAllCountrys() { COUNTRY.clear();}
-
-    public static void removeAppointment(Appointment appointment) { APPOINTMENTS.remove(appointment); }
-
-    public static void deleteFirstLevelDivision(){ FirstLevelDivision.clear(); }
-
-    public static void deleteReport(){REPORT.clear();}
+//
+//    public static void removeAllCountrys() { COUNTRY.clear();}
+//
+//    public static void removeAppointment(Appointment appointment) { APPOINTMENTS.remove(appointment); }
+//
+//    public static void deleteFirstLevelDivision(){ FirstLevelDivision.clear(); }
+//
+//    public static void deleteReport(){REPORT.clear();}
 
     public static void removeFilterDivision() { filterDivision.clear();}
 

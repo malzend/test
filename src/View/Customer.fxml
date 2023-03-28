@@ -8,17 +8,17 @@
    <children>
       <VBox layoutX="698.0" layoutY="77.0" prefHeight="200.0" prefWidth="142.0" style="-fx-spacing: 10;">
          <children>
-            <Button fx:id="makeAppointmentButton" mnemonicParsing="false" onAction="#makeAppointmentAction" prefHeight="25.0" prefWidth="145.0" text="Make Appoitnment">
+            <Button mnemonicParsing="false" onAction="#makeAppointmentAction" prefHeight="25.0" prefWidth="145.0" text="Make Appoitnment">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin></Button>
-            <Button fx:id="addCustomerButton" mnemonicParsing="false" onAction="#addCustomerAction" prefHeight="25.0" prefWidth="147.0" text="Add Customer" />
-            <Button fx:id="modifyCustomerButton" mnemonicParsing="false" onAction="#modifyCustomerAction" prefHeight="26.0" prefWidth="143.0" text="Modify Customer" />
-            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onAction="#deleteCustomerAction" prefHeight="25.0" prefWidth="139.0" text="Delete Customer" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="223.0" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#addCustomerAction" prefHeight="25.0" prefWidth="147.0" text="Add Customer" />
+            <Button mnemonicParsing="false" onAction="#modifyCustomerAction" prefHeight="26.0" prefWidth="143.0" text="Modify Customer" />
+            <Button mnemonicParsing="false" onAction="#deleteCustomerAction" prefHeight="25.0" prefWidth="139.0" text="Delete Customer" />
+            <Button mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="223.0" text="Exit" />
          </children>
       </VBox>
-      <TableView fx:id="customerTable" layoutX="21.0" layoutY="55.0" onSort="#customerTableAction" prefHeight="271.0" prefWidth="654.0">
+      <TableView fx:id="customerTable" layoutX="21.0" layoutY="55.0"  prefHeight="271.0" prefWidth="654.0">
         <columns>
           <TableColumn fx:id="customerID" prefWidth="99.0" text="Customer_ID" />
           <TableColumn fx:id="customerName" prefWidth="106.0" text="Customer_Name" />

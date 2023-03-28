@@ -27,36 +27,36 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use ID:" />
          </children>
       </VBox>
-      <VBox fx:id="endTimeText" layoutX="152.0" layoutY="26.0" onDragDetected="#endTimeTextAction" prefHeight="431.0" prefWidth="170.0" style="-fx-spacing: 10;">
+      <VBox  layoutX="152.0" layoutY="26.0"  prefHeight="431.0" prefWidth="170.0" style="-fx-spacing: 10;">
          <children>
-            <TextField fx:id="appointmentDescription" onAction="#appoiitmentDescriptionTextAction" prefHeight="26.0" prefWidth="170.0" />
-            <TextField fx:id="titleTextField" onAction="#titleTextAction" prefHeight="26.0" prefWidth="122.0" />
-            <TextField fx:id="locationAppointmentText" onAction="#locationAppointmentTextAction" />
-            <ComboBox fx:id="contactAppointmentCombBox" onAction="#contactCombBoxAction" prefHeight="26.0" prefWidth="172.0" />
-            <TextField fx:id="typeAppointmentText" onAction="#typeAppointmentTextAction" prefHeight="26.0" prefWidth="169.0" />
+            <TextField fx:id="appointmentDescription"  prefHeight="26.0" prefWidth="170.0" />
+            <TextField fx:id="titleTextField"  prefHeight="26.0" prefWidth="122.0" />
+            <TextField fx:id="locationAppointmentText" />
+            <ComboBox fx:id="contactAppointmentCombBox"  prefHeight="26.0" prefWidth="172.0" />
+            <TextField fx:id="typeAppointmentText"  prefHeight="26.0" prefWidth="169.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="hourComboBox" onAction="#hourComboBoxAction" prefHeight="26.0" prefWidth="76.0" promptText="Hour" />
-                  <ComboBox fx:id="minutseStert" onAction="#secondComboBoxAction" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+                  <ComboBox fx:id="hourComboBox"  prefHeight="26.0" prefWidth="76.0" promptText="Hour" />
+                  <ComboBox fx:id="minutesStart"  prefHeight="26.0" prefWidth="94.0" promptText="Second" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="hourComboBox1" onAction="#hourComboBoxAction1" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
-                  <ComboBox fx:id="minutesEned" onAction="#secondComboBoxAction1" prefHeight="26.0" prefWidth="94.0" promptText="Second" />
+                  <ComboBox fx:id="hourComboBox1"  prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
+                  <ComboBox fx:id="minutesEnd"  prefHeight="26.0" prefWidth="94.0" promptText="Second" />
                </children>
             </HBox>
-            <DatePicker fx:id="DatePicker" onAction="#startDateAction" />
-            <DatePicker fx:id="endPickerDate" onAction="#endDateAction" />
-            <TextField fx:id="appointmentIDText" disable="true" onAction="#appointmentIDTextAction" />
-            <ComboBox fx:id="customerComboBox" disable="false" onAction="#customerIDTextAction" prefHeight="26.0" prefWidth="177.0" />
-            <ComboBox fx:id="userComboBox" disable="false" onAction="#UserIDTextAction" prefHeight="26.0" prefWidth="173.0" />
+            <DatePicker fx:id="DatePicker" />
+            <DatePicker fx:id="endPickerDate" />
+            <TextField fx:id="appointmentIDText" disable="true"  />
+            <ComboBox fx:id="customerComboBox" disable="false"  prefHeight="26.0" prefWidth="177.0" />
+            <ComboBox fx:id="userComboBox" disable="false"  prefHeight="26.0" prefWidth="173.0" />
          </children>
       </VBox>
       <VBox layoutX="432.0" layoutY="399.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#appointmentButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#appointmentExitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#appointmentButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add" />
+            <Button mnemonicParsing="false" onAction="#appointmentExitButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
          </children>
       </VBox>
    </children>

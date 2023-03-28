@@ -37,9 +37,6 @@ public class CustomerController implements Initializable{
      * <br>
      * selectors used to read or set form fields <br>
      */
-
-    @FXML
-    private Button addCustomerButton;
     @FXML
     private TableView<Customer> customerTable;
     @FXML
@@ -56,14 +53,6 @@ public class CustomerController implements Initializable{
     private TableColumn<Customer, String> Country;
     @FXML
     private TableColumn<Customer,String> First_Level_Division;
-    @FXML
-    private Button deleteCustomerButton;
-    @FXML
-    private Button modifyCustomerButton;
-    @FXML
-    private Button exitButton;
-    @FXML
-    private Button makeAppointmentButton;
 
     /**
      * initialize will populate data to the customer table from the database.<br>
@@ -86,8 +75,8 @@ public class CustomerController implements Initializable{
 
     /**
      * addCustomerAction will load the customer add page.<br>
-     * @param event
-     * @throws IOException
+     * @param event will add customer information when it's clicked.<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
    @FXML
     void addCustomerAction(ActionEvent event) throws IOException {
@@ -99,19 +88,13 @@ public class CustomerController implements Initializable{
         Window.setTitle("Customer Page:");
         Window.show();
     }
-
-
-    @FXML
-    void customerTableAction(ActionEvent event) { }
-
     /**
      * deleteCustomerAction will delete the customer table using the customerId.<br>
      * The customerID will be sent to the database via a sql query that is stored in helper.CustomerQuery.
-     * @param event
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
-    void deleteCustomerAction(ActionEvent event) throws SQLException {
+    void deleteCustomerAction() throws SQLException {
         /**
          * selectedID is used to hold the customer row id column and then passed to CustomerQuery.customerDelete().<br>
          * An alert will be displayed to show if the delete was successful or not.<br>
@@ -166,11 +149,10 @@ public class CustomerController implements Initializable{
         Country.setCellValueFactory(new PropertyValueFactory<Customer,String>("CountryName"));
 
     }
-
     /**
      * exitAction loads the page for user.<br>
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void exitAction(ActionEvent event)throws IOException {
@@ -181,16 +163,13 @@ public class CustomerController implements Initializable{
         Window.setTitle("Customer Page:");
         Window.show();
     }
-
     /**
      * makeAppointmentAction will load the AddAppointment page to add a new appointments for the customer.<br>
-     * @param event
-     * @throws IOException
-     * @throws SQLException
+     * @param event will load the appointment add page.<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
-
     @FXML
-    void makeAppointmentAction(ActionEvent event) throws IOException, SQLException {
+    void makeAppointmentAction(ActionEvent event) throws IOException {
         try {
             Stage stage;
             FXMLLoader loader = new FXMLLoader();
@@ -212,12 +191,11 @@ public class CustomerController implements Initializable{
 
         }
     }
-
     /**
-     * modifyCustomerAction load the modify page to adjust customer info.
-     * @param event
-     * @throws IOException
-     * @throws SQLException
+     * modifyCustomerAction load the modify page and send the customer info.<br>
+     * @param event load modify page and send the customer information when it's clicked,<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void modifyCustomerAction(ActionEvent event) throws IOException, SQLException {

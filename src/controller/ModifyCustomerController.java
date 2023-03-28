@@ -35,9 +35,6 @@ public class ModifyCustomerController implements Initializable {
      * selectors used to read or set form fields <br>
      */
     @FXML
-    private Button addButton;
-
-    @FXML
     private TextField addressTextBox;
 
     @FXML
@@ -48,9 +45,6 @@ public class ModifyCustomerController implements Initializable {
 
     @FXML
     private TextField customerTextBox;
-
-    @FXML
-    private Button exitButton;
 
     @FXML
     private ComboBox<String> firstLevelDivisionCombBox;
@@ -84,8 +78,8 @@ public class ModifyCustomerController implements Initializable {
     /**
      * setCustomer will get the selected Customer ID and it's relevant information to be displayed in it's <br>
      * appropriate fields.<br>
-     * @param customer
-     * @throws SQLException
+     * @param customer set the Customer informant.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public void setCustomer( Customer customer) throws SQLException {
         firstLevelDivisionCombBox.getItems().clear();
@@ -104,7 +98,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * exitButtonAction will load the Customer page once the user clicks it.<br>
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     @FXML
@@ -127,11 +121,10 @@ public class ModifyCustomerController implements Initializable {
 
     /**
      * CountyTextBoxAction returns the user selection of a country and stores it in a variables.<br>
-     * @param event
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
-    void countryTextBoxAction(ActionEvent event) throws SQLException {
+    void countryTextBoxAction() throws SQLException {
 
         firstLevelDivisionCombBox.getItems().clear();
         Model.removeFilterDivision();
@@ -148,24 +141,19 @@ public class ModifyCustomerController implements Initializable {
                     Model.getFilterDivision().get(i).getDivisionName());
         }}
     }
-
-    @FXML
-    void firstLevelDivisionTextBoxAction(ActionEvent event) {
-    }
-
     /**
-     * modifyButtonAction will allow the user to add new information.
-     * @param event
-     * @throws SQLException
+     * modifyButtonAction will allow the user to add new information.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+
      */
     @FXML
-    void modifyButtonAction(ActionEvent event) throws SQLException {
+    void modifyButtonAction( )throws SQLException {
         /**
-         * The text fields will get the text to the following variables and store it.
+         * The text fields will get the text to the following variables and store it.<br>
          */
         String customerName = customerTextBox.getText();
         String address = addressTextBox.getText();
-        String postalCode = addressTextBox.getText();
+        String postalCode = postalCodeTextBox.getText();
         String phoneNumber = phoneNumberTextBox.getText();
         SingleSelectionModel<String> firstLevelDivision =  firstLevelDivisionCombBox.getSelectionModel();
         String test = firstLevelDivision.getSelectedItem();
@@ -176,8 +164,8 @@ public class ModifyCustomerController implements Initializable {
         System.out.println(whatHappend);
         Alert alertType;
         /**
-         * the if condition will check if the processResult is ture or false.
-         * if false then it will display not successful if ture it will display successfull.
+         * the if condition will check if the processResult is ture or false.<br>
+         * if false then it will display not successful if ture it will display successful.<br>
          */
         if(processResult == "Success"){
             Model.modifyCustomer(userID,new Customer(userID , customerName,address,postalCode,phoneNumber, dID));
@@ -187,22 +175,12 @@ public class ModifyCustomerController implements Initializable {
             alertType.setContentText("You have Modify the selected customer record");
         } else {
             alertType = new Alert(Alert.AlertType.WARNING);
-            alertType.setTitle("Modify record States");// line 2
-            alertType.setHeaderText(" Modify was not successful");// line 3
-            alertType.setContentText("You have not Modified the selected customer record");// line 4
+            alertType.setTitle("Modify record States");
+            alertType.setHeaderText(" Modify was not successful");
+            alertType.setContentText("You have not Modified the selected customer record");
         }
         alertType.show();
     }
 
-    @FXML
-    void phoneNumberTextBoxAction(ActionEvent event) { }
-    @FXML
-    void postalCodeTextBoxCtion(ActionEvent event) { }
-    @FXML
-    void addressTextBoxAction(ActionEvent event) { }
-    @FXML
-    public void customerTextBoxAction(ActionEvent actionEvent) { }
-    @FXML
-    public void customerIdTextBoxAction(ActionEvent actionEvent) { }
 
 }

@@ -22,9 +22,9 @@ import java.time.format.DateTimeFormatter;
 public class AppointmentQuery {
     /**
      * appointmentData_new will return all the appointment that are stored in the database.<br>
-     * The methode establishes database connection and the send sql query to get the data.<br>
-     * @return  an ObservableList of type appointment will be returned.<br>
-     * @throws SQLException
+     * sends a SELECT sql query to get the data.<br>
+     * @return an ObservableList of type appointment will be returned.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static ObservableList<Appointment> appointmentData_new() throws SQLException {
@@ -54,9 +54,9 @@ public class AppointmentQuery {
     /**
      * appointmentDelete methode deletes an appointment from the database via delete sql query.<br>
      * The sql then returns Success if process is completed and Not successful if it's false.<br>
-     * @param appointmentID
-     * @return
-     * @throws SQLException
+     * @param appointmentID set Appointment_ID in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrues.<br>
      */
 
     public static String appointmentDelete(int appointmentID) throws SQLException {
@@ -76,19 +76,19 @@ public class AppointmentQuery {
     }
 
     /**
-     * appointmentAdd methode add new information to database via Insert query.,br>
+     * appointmentAdd methode adds new information to database via Insert query.<br>
      * The LocalDateTime variables are converted to Timestamp.<br>
-     * @param Title
-     * @param Description
-     * @param Location
-     * @param Type
-     * @param start
-     * @param end
-     * @param customerID
-     * @param userID
-     * @param contactID
-     * @return
-     * @throws SQLException
+     * @param Title sets Title  in sql query
+     * @param Description sets Description in sql query
+     * @param Location sets Location in sql query
+     * @param Type sets Type in sql query
+     * @param start sets start in sql query
+     * @param end sets end in sql query
+     * @param customerID sets customerID in sql query
+     * @param userID sets userID in sql query
+     * @param contactID sets contactID in sql query
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static String appointmentAdd(String Title, String Description, String Location, String Type, LocalDateTime start, LocalDateTime end, int customerID, int userID, int contactID) throws SQLException {
 
@@ -119,18 +119,18 @@ public class AppointmentQuery {
     /**
      * updateAppointment methode updates appointment information when called.<br>
      * The sql then returns Success if process is completed and Not successful if it's false.<br>
-     * @param Appointment_ID
-     * @param Title
-     * @param Description
-     * @param Location
-     * @param Type
-     * @param start
-     * @param end
-     * @param userID
-     * @param customerID
-     * @param contactID
-     * @return
-     * @throws SQLException
+     * @param Appointment_ID set Appointment_ID in sql.<br>
+     * @param Title sets Title in sql query.<br>
+     * @param Description sets Description in sql query.<br>
+     * @param Location sets Location in sql query.<br>
+     * @param Type sets Type in sql query.<br>
+     * @param start sets start in sql query.<br>
+     * @param end sets end in sql query.<br>
+     * @param customerID sets customerID in sql query.<br>
+     * @param userID sets userID in sql query.<br>
+     * @param contactID sets contactID in sql query.<br>
+     * @return Success if the process was completed and return not successful if not.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static String updateAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime start, LocalDateTime end, int userID,  int customerID,int contactID) throws SQLException {
         Timestamp startTimestamp = Timestamp.valueOf(start);
@@ -163,8 +163,8 @@ public class AppointmentQuery {
     /**
      * loadContact method loads contact information when called .<br>
      * The methode return an ObservableList of type Contact.<br>
-     * @return
-     * @throws SQLException
+     * @return an ObservableList of Contact type.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static ObservableList<Contact> loadContact() throws SQLException {
         ObservableList<Contact> list = FXCollections.observableArrayList();
@@ -185,8 +185,8 @@ public class AppointmentQuery {
     /**
      * loadUserData a method that will load user information from the database.<br>
      * SELECT query is used to select the necessary information form database.<br>
-     * @param userName
-     * @throws SQLException
+     * @param userName set User_Name in sql.
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static void loadUserData(String userName) throws SQLException {
         String userData = "SELECT * FROM users WHERE User_Name = ?";
@@ -204,33 +204,10 @@ public class AppointmentQuery {
     }
 
     /**
-     * joinTypeMonth the method will creates an sql query that inner joins appointments table <br>
-     * and displays the all type of appointment and the month that it accrued in.
-     * @return an int.
-     * @throws SQLException
-     */
-//    public static void joinTypeMonth(String month, String type) throws SQLException {
-//        String joinedTable = "SELECT t1.Type AS Type, monthname(t2.Start) AS Month, COUNT(t1.Type) AS Count FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID group by t1.Type,monthname(t2.Start);";
-//        PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
-//        ps.setString(1, month);
-//        ps.setNString(2, type);
-//        ResultSet rl = ps.executeQuery();
-//        while (rl.next()) {
-//            String monthFromData = rl.getString("Month");
-//            String Type = rl.getString("Type");
-//            int count = rl.getInt("Count");
-//
-//            Model.addReport(new Report(monthFromData, Type,count));
-//
-//        }
-//
-//    }
-
-    /**
      * loadTypeMonth the method will creates an sql query that inner joins appointments table <br>
      * and returns how many times a type accrued in a month. This will to help in determine the<br>
      * total of appointment type.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static  ObservableList<Report> loadTypeMonth()throws SQLException {
         ObservableList<Report> list = FXCollections.observableArrayList();
@@ -250,9 +227,9 @@ public class AppointmentQuery {
     /**
      * customerContact this methode return a list of appointment type via SELECT Query<br>
      * and then add the lise to Appointment class.<br>
-     * @param contactID
+     * @param contactID set Contact_ID in sql query.<br>
      * @return a ObservableList of Appointment type.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static ObservableList<Appointment> customerContact(int contactID) throws SQLException {
@@ -280,8 +257,8 @@ public class AppointmentQuery {
 
     /**
      * appointmentsByWeek filter appointment by the current week using select query.
-     * @return a ObservableList of Appointment type.<br>
-     * @throws SQLException
+     * @return an ObservableList of Appointment type.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     public static ObservableList<Appointment> appointmentsByWeek() throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
@@ -309,8 +286,8 @@ public class AppointmentQuery {
 
     /**
      * appointmentsByMonth filter appointment by the current month using select query.
-     * @return a ObservableList of Appointment type.<br>
-     * @throws SQLException
+     * @return an ObservableList of Appointment type.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public static ObservableList<Appointment> appointmentsByMonth() throws SQLException {

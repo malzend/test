@@ -14,7 +14,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -23,15 +22,13 @@ import model.Model;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
- * modify will allow the user to do the following:
+ * modify will allow the user to do the following:<br>
  * Get the user data for the selected row and load it to the page.<br>
  * Allow the user to change any data of the appointment.<br>
  * Check for any overlap in appointment except the same appointment ID.
@@ -50,19 +47,11 @@ public class ModifyAppointment implements Initializable {
     @FXML
     private ComboBox<Integer> userComboBox;
     @FXML
-    private Button addButton;
-    @FXML
     private TextField appointmentDescription;
     @FXML
     private ComboBox<String> contactAppointmentCombBox;
     @FXML
     private ComboBox<Integer> customerComboBox;
-    @FXML
-    private VBox endTimeText;
-    @FXML
-    private TextField endtTimeText;
-    @FXML
-    private Button exitButton;
     @FXML
     private TextField locationAppointmentText;
     @FXML
@@ -70,9 +59,9 @@ public class ModifyAppointment implements Initializable {
     @FXML
     private ComboBox<Integer> hourComboBox1;
     @FXML
-    private ComboBox<Integer> minutseStert;
+    private ComboBox<Integer> minutesStart;
     @FXML
-    private ComboBox<Integer> minutesEned;
+    private ComboBox<Integer> minutesEnd;
     @FXML
     private DatePicker endPickerDate;
     @FXML
@@ -86,7 +75,7 @@ public class ModifyAppointment implements Initializable {
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
     /**
      * initialize will populate the time, date and contact names for each combo, also  user ID and Customer id will<br>
-     * populated for the Database.
+     * populated for the Database.<br>
      * @param location
      * @param resources
      */
@@ -99,9 +88,9 @@ public class ModifyAppointment implements Initializable {
         }
         minutes.addAll(0, 15, 30, 45, 59);
         hourComboBox.setItems(Model.businessTimeStart());
-        minutseStert.setItems(minutes);
+        minutesStart.setItems(minutes);
         hourComboBox1.setItems(Model.businessTimeStart());
-        minutesEned.setItems(minutes);
+        minutesEnd.setItems(minutes);
         try {
             for(int i = 0; i <AppointmentQuery.loadContact().size();i++){
                 contactAppointmentCombBox.getItems().add(AppointmentQuery.loadContact().get(i).getContactName()); }}
@@ -113,7 +102,7 @@ public class ModifyAppointment implements Initializable {
     }
     @FXML
     /**
-     * setAppointment will get the selected appointment row information and load it to modify page.
+     * setAppointment will get the selected appointment row information and load it to modify page.<br>
      */
     public void setAppointment(Appointment appointment) throws SQLException {
 
@@ -133,42 +122,29 @@ public class ModifyAppointment implements Initializable {
         int hour1  = appointment.getEndTimeDate().getHour();
         int minutesEnd = appointment.getEndTimeDate().getMinute();
         hourComboBox.setValue(hour);
-        minutseStert.setValue(minuteStart);
-        minutesEned.setValue(minutesEnd);
+        minutesStart.setValue(minuteStart);
+        this.minutesEnd.setValue(minutesEnd);
         hourComboBox1.setValue(hour1);
         appointmentIDText.setText(String.valueOf(appointment.getAppointmentID()));
         customerComboBox.setValue(appointment.getCustomerID());
         userComboBox.setValue(appointment.getUserID());
 
-
-    }
-
-    @FXML
-    void UserIDTextAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void appoiitmentDescriptionTextAction(ActionEvent event) {
-
     }
     /**
      * Description of the method.<br>
-     * Lambda 2 helps in filtering the appointment based on the user id and date. <br>
-     * The meth simplifies the process of obtaining the data of the appointment with minimizing the.<br>
-     * running time. <br>
+     * Lambda 2 helps in filtering the appointment based on the Customer id and date. <br>
+     * This simplifies the process of obtaining the data of the appointment with minimizing memory allocation and code execution. <br>
      *
      * appointmentButtonAction will do the following:<br>
      * Get the user input and convert time and date to LocalDateTime type.<br>
      * Check if their is an overlap with another appointment if the Customer already has other appointment listed in the day.<br>
      * Insert the date if their is no overlap with other appointment, if their is an overlap display an alert with the a overlap<br>
      * appointment.<br>
-     * The for loop will loop the contactless to get it's id
-     *  @param event
-     * @throws SQLException
+     * The for loop will loop the contactless to get it's id.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
-    void appointmentButtonAction(ActionEvent event) throws SQLException {
+    void appointmentButtonAction( )throws SQLException {
         int contactNum = -1;
         int appointmentID = Integer.parseInt(appointmentIDText.getText());
         String title = titleTextField.getText();
@@ -178,10 +154,10 @@ public class ModifyAppointment implements Initializable {
         LocalDate startDate = DatePicker.getValue();
         LocalDate endDate = endPickerDate.getValue();
         int hourStart = hourComboBox.getValue();
-        int minutesStart = minutseStert.getValue();
+        int minutesStart = this.minutesStart.getValue();
         LocalTime startTime = LocalTime.of(hourStart,minutesStart);
         int hourEnd = hourComboBox1.getValue();
-        int minutesEnd = minutesEned.getValue();
+        int minutesEnd = this.minutesEnd.getValue();
         LocalTime endTime = LocalTime.of(hourEnd,minutesEnd);
         int customer = customerComboBox.getValue();
         int user = userComboBox.getValue();
@@ -199,6 +175,9 @@ public class ModifyAppointment implements Initializable {
         LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime );
         LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime );
 
+        /**
+         * check to see if the appointment filed change or not.<br>
+         */
         Appointment noChange = (new Appointment(appointmentID,title,description,location,type,startDateTime,endDateTime,user,customer,contactID));
         if(selectedAppointment.getAppointmentID() == noChange.getAppointmentID() && selectedAppointment.getTitle().equals(noChange.getTitle()) && selectedAppointment.getDescription().equals(noChange.getDescription()) &&
            selectedAppointment.getLocation().equals(noChange.getLocation()) &&selectedAppointment.getType().equals(noChange.getType()) && selectedAppointment.getEndTimeDate().isEqual(noChange.getEndTimeDate()) && selectedAppointment.getStartTimeDate().isEqual(noChange.getStartTimeDate()) &&
@@ -295,20 +274,11 @@ public class ModifyAppointment implements Initializable {
         }
 
     }
-
-
-
-    @FXML
-    void appointmentIDTextAction(ActionEvent event) {
-
-    }
-
     /**
-     * appointmentExitButtonAction allow the user to exit form the page to the appointment page.
+     * appointmentExitButtonAction allow the user to exit form the page to the appointment page.<br>
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
-
     @FXML
     void appointmentExitButtonAction(ActionEvent event) throws IOException {
         Parent userLogOut = FXMLLoader.load(getClass().getResource("/view/Appointment.fxml"));
@@ -319,50 +289,5 @@ public class ModifyAppointment implements Initializable {
         Window.show();
     }
 
-    @FXML
-    void contactCombBoxAction() {
 
-    }
-
-    @FXML
-    void customerIDTextAction() {
-
-    }
-
-    @FXML
-    void endTimeTextAction( ){
-
-    }
-
-    @FXML
-    void locationAppointmentTextAction() {
-
-    }
-
-    @FXML
-    void titleTextAction() {
-
-    }
-
-    @FXML
-    void typeAppointmentTextAction() {
-
-    }
-
-    @FXML
-    void endDateAction() {
-    }
-    @FXML
-    void startDateAction() {
-    }
-    @FXML
-    void hourComboBoxAction1() {
-    }
-    @FXML
-    void secondComboBoxAction1() {
-    }
-    @FXML
-    void hourComboBoxAction(){}
-    @FXML
-    void secondComboBoxAction(){}
 }

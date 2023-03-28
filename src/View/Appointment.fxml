@@ -7,10 +7,10 @@
    <children>
       <VBox layoutX="813.0" layoutY="101.0" prefHeight="165.0" prefWidth="130.0" style="-fx-spacing: 10;">
          <children>
-            <Button fx:id="addAppointmentButton" mnemonicParsing="false" onAction="#addAppointmentAction" prefHeight="26.0" prefWidth="132.0" text="Add Appointment" />
-            <Button fx:id="modifyAppointmentButton" mnemonicParsing="false" onAction="#modfiyAppointmentAction" prefHeight="25.0" prefWidth="144.0" text="Modify Appointmnet" />
-            <Button fx:id="mofitydeleteButton" mnemonicParsing="false" onAction="#modifydeleteAction" prefHeight="26.0" prefWidth="132.0" text="Delete Appointment" />
-            <Button fx:id="exitModifyButton" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="149.0" text="Exit" />
+            <Button  mnemonicParsing="false" onAction="#addAppointmentAction" prefHeight="26.0" prefWidth="132.0" text="Add Appointment" />
+            <Button mnemonicParsing="false" onAction="#modifyAppointmentAction" prefHeight="25.0" prefWidth="144.0" text="Modify Appointmnet" />
+            <Button fx:id="modifyDeleteButton" mnemonicParsing="false" onAction="#modifyDeleteAction" prefHeight="26.0" prefWidth="132.0" text="Delete Appointment" />
+            <Button  mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="149.0" text="Exit" />
          </children>
       </VBox>
       <RadioButton fx:id="radioByWeek" layoutX="384.0" layoutY="42.0" mnemonicParsing="false" onAction="#radioByWeekAction" text="Week">
@@ -32,6 +32,6 @@
             <TableColumn fx:id="userIDColumn" prefWidth="120.0" text="User ID" />
         </columns>
       </TableView>
-      <RadioButton fx:id="allRadio" layoutX="667.0" layoutY="42.0" mnemonicParsing="false" onAction="#allRadioAction" text=" All " toggleGroup="$filterAppointment" />
+      <RadioButton  layoutX="667.0" layoutY="42.0" mnemonicParsing="false" onAction="#allRadioAction" text=" All " toggleGroup="$filterAppointment" />
    </children>
 </AnchorPane>

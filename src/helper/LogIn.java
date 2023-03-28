@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class LogIn {
     /**
      * validateUser takes two permeates of string to validate user info
-     * @param uName
-     * @param passWord
+     * @param uName set User_Name in sql query.<br>
+     * @param passWord set Password in sql query.<br>
      * @return true if user name and password are in the database or false if not
      */
     public static boolean validateUser(String uName,String passWord) {
@@ -25,16 +25,7 @@ public class LogIn {
         validate.setString(2, passWord);
         ResultSet resultSet = validate.executeQuery();
         while(resultSet.next()){
-           // String userName = resultSet.getString(2);
-           // String password = resultSet.getString(2);
-
-            //if(userName == uName && passWord == password)
-           // {
             return true;
-           // }
-           // else{
-             //   continue;
-            //}
         }
         }catch (SQLException e){
             System.out.println(e);

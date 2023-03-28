@@ -61,17 +61,11 @@ public class ReportController implements Initializable {
     @FXML
     private TextField totalCustomerField;
     @FXML
-    private Button Go;
-    @FXML
     private Button Go2;
     @FXML
     private Button Go3;
     @FXML
-    private ComboBox<String> month2;
-    @FXML
     private ComboBox<Country> countryName;
-    @FXML
-    private ComboBox<String> type;
     @FXML
     private TableColumn<Appointment, Integer> appointmentID;
     @FXML
@@ -93,16 +87,11 @@ public class ReportController implements Initializable {
     @FXML
     private TableView<Appointment> contactScheduleReport;
     @FXML
-    private TableColumn<Report, Integer> total;
-    @FXML
     private TableColumn<Report, String> type1;
     @FXML
     private TableColumn<Appointment, String> type2;
 
-    ObservableList<String> monthComboBox = FXCollections.observableArrayList();
-    ObservableList<String> typeComboBox = FXCollections.observableArrayList();
     ObservableList<String> contactComboBox = FXCollections.observableArrayList();
-
     /**
      * initialize will load the contactComboBox and countryName date from the database.<br>
      * @param location
@@ -127,13 +116,11 @@ public class ReportController implements Initializable {
         }
 
     }
-
     /**
      * ScheduleForEachContactButton will display the appropriate contents the is used to display <br>
      * appointments scheduled for each contact.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
-
     @FXML
     void ScheduleForEachContactButton() throws SQLException {
         totalCustomers.setVisible(false);
@@ -145,7 +132,6 @@ public class ReportController implements Initializable {
         countryLabel.setVisible(false);
         totalCustomerLabel.setVisible(false);
 
-
         panel.setVisible(true);
         totalNumberTypeMonth.setVisible(false);
         contactScheduleReport.setVisible(true);
@@ -153,10 +139,8 @@ public class ReportController implements Initializable {
         countryNameField.setVisible(false) ;
         totalCustomerField.setVisible(false);
 
-
         Go2.setVisible(true);
         Go3.setVisible(false);
-     
 
         contactScheduleReport.setItems(AppointmentQuery.appointmentData_new());
         appointmentID.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("AppointmentID"));
@@ -168,13 +152,11 @@ public class ReportController implements Initializable {
         customerID.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("CustomerID"));
 
     }
-
     /**
-     * exitButtonAction used to load the User page.
+     * exitButtonAction used to load the User page.<br>
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
-
     @FXML
     void exitButtonAction(ActionEvent event) throws IOException {
         Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.FXML"));
@@ -186,14 +168,12 @@ public class ReportController implements Initializable {
         Window.setTitle("Report Page:");
         Window.show();
     }
-
     /**
      * totalCustomerAction filters total customer by the type and the month.<br>
      * totalCustomerAction will display the appropriate contents the is used to display <br>
      * appointments scheduled for each contact.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
-
     @FXML
     void totalCustomerAction() throws SQLException {
 
@@ -217,16 +197,13 @@ public class ReportController implements Initializable {
         month1.setCellValueFactory(new PropertyValueFactory<Report, String>("ReportType"));
         count.setCellValueFactory(new PropertyValueFactory<Report, Integer>("Count"));
     }
-
     /**
      * whatToDoButtonAction filter the total number of customers in each country. <br>
      * will display the appropriate contents the is used to display <br>
      * appointments scheduled for each contact.<br>
      */
-
     @FXML
     void whatToDoButtonAction() {
-
 
         contactScheduleReport.setVisible(false);
         totalNumberTypeMonth.setVisible(false);
@@ -246,20 +223,11 @@ public class ReportController implements Initializable {
         Go2.setVisible(false);
         Go3.setVisible(true);
         panel.setVisible(false);
-
-
     }
-
-
-    @FXML
-    void totalNumberTypeMonthAction() {
-    }
-
     /**
      * go2ActionButton method get the contact name and then compares it in if condition.<br>
      * If the condition is true then it returns the appointments accosted with the contact.
-     *
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void go2ActionButton() throws SQLException {
@@ -287,11 +255,10 @@ public class ReportController implements Initializable {
         customerID.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("CustomerID"));
 
     }
-
     /**
      * go3Action method filters the total customers in each country.<br>
      * The loop will loop through each customer data and return the county base on division ID.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void go3Action() throws SQLException {

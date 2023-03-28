@@ -1,3 +1,4 @@
+
 package controller;
 
 import helper.AppointmentQuery;
@@ -57,15 +58,9 @@ public class addAppointmentController implements Initializable {
     @FXML
     private ComboBox<Integer> userIDText;
     @FXML
-    private Button addButton;
-    @FXML
-    private TextField appointmentIDText;
-    @FXML
     private ComboBox<Contact> contactAppointmentCombBox;
     @FXML
     private ComboBox<Integer> customerIDText;
-    @FXML
-    private Button exitButton;
     @FXML
     private TextField locationAppointmentText;
     @FXML
@@ -76,7 +71,7 @@ public class addAppointmentController implements Initializable {
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
     /**
      * initialize will populate the time , date and contact names for each combo, also  user ID and Customer id will<br>
-     *populated for the Database.
+     * populated for the Database.<br>
      *  @param url
      * @param resourceBundle
      */
@@ -94,9 +89,9 @@ public class addAppointmentController implements Initializable {
             throwables.printStackTrace();
         }
         try {
-        for(int i = 0; i < UserQuery.userData().size(); i++)
+            for(int i = 0; i < UserQuery.userData().size(); i++)
 
-            userIDText.getItems().add(UserQuery.userData().get(i).getUserID());
+                userIDText.getItems().add(UserQuery.userData().get(i).getUserID());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -128,7 +123,7 @@ public class addAppointmentController implements Initializable {
      * Check if their is an overlap with another appointment if the Customer already has other appointment listed in the day.<br>
      * Insert the date if their is no overlap with other appointment, if their is an overlap display an alert with the a overlap<br>
      * appointment.<br>
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void appointmentButtonAction() throws SQLException {
@@ -204,19 +199,19 @@ public class addAppointmentController implements Initializable {
                 alertType.show();
             } else {
                 Alert alertType = new Alert(Alert.AlertType.WARNING);
-                alertType.setTitle("Insert record states");// line 2
-                alertType.setHeaderText("Insert was not successful");// line 3
-                alertType.setContentText("The new customer appointment record Insertion failed");// line 4
+                alertType.setTitle("Insert record states");
+                alertType.setHeaderText("Insert was not successful");
+                alertType.setContentText("The new customer appointment record Insertion failed");
                 alertType.show();
             }
         }
 
-        }
+    }
 
     /**
      * appointmentTextButtonAction allow the user to exit form the page to the appointment page.
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
     @FXML
     void appointmentTextButtonAction(ActionEvent event) throws IOException {
@@ -229,29 +224,6 @@ public class addAppointmentController implements Initializable {
         Window.show();
     }
 
-    @FXML
-    void appointmentIDTextAction( ){ }
-    @FXML
-    void contactCombBoxAction() { }
-    @FXML
-    void customerIDTextAction() { }
-    @FXML
-    void locationAppointmentTextAction() { }
-    @FXML
-    void titleTextAction() { }
-    @FXML
-    void typeAppointmentTextAction() { }
-    @FXML
-    void DatePickerAction() { }
-    @FXML
-    void endDataPicker(){}
-    @FXML
-    void secondCombBox1() { }
-    @FXML
-    void secondComboBox( ){}
-    @FXML
-    void HourComboBox(){}
-    @FXML
-    void hourCombBox1(){}
+
 
 }

@@ -25,33 +25,33 @@
       <VBox layoutX="184.0" layoutY="61.0" prefHeight="442.0" prefWidth="190.0" style="-fx-spacing: 10;">
          <children>
             <TextField fx:id="appointmentDescription" onAction="#appointmentDescriptionTextAction" />
-            <TextField fx:id="titleTextField" onAction="#titleTextAction" prefHeight="26.0" prefWidth="122.0" />
-            <TextField fx:id="locationAppointmentText" onAction="#locationAppointmentTextAction" />
-            <ComboBox fx:id="contactAppointmentCombBox" onAction="#contactCombBoxAction" prefHeight="26.0" prefWidth="189.0" />
-            <TextField fx:id="typeAppointmentText" onAction="#typeAppointmentTextAction" />
+            <TextField fx:id="titleTextField"  prefHeight="26.0" prefWidth="122.0" />
+            <TextField fx:id="locationAppointmentText"  />
+            <ComboBox fx:id="contactAppointmentCombBox" prefHeight="26.0" prefWidth="189.0" />
+            <TextField fx:id="typeAppointmentText" />
             <HBox prefHeight="29.0" prefWidth="183.0">
                <children>
-                  <ComboBox fx:id="HourComboBox" onAction="#HourComboBox" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
-                  <ComboBox fx:id="secondComboBox" onAction="#secondComboBox" prefHeight="26.0" prefWidth="110.0" promptText="Second" />
+                  <ComboBox fx:id="HourComboBox" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
+                  <ComboBox fx:id="secondComboBox"  prefHeight="26.0" prefWidth="110.0" promptText="Second" />
                </children>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="183.0">
                <children>
-                  <ComboBox fx:id="hourCombBox1" onAction="#hourCombBox1" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
-                  <ComboBox fx:id="secondComboBox1" onAction="#secondCombBox1" prefHeight="26.0" prefWidth="110.0" promptText="Second" />
+                  <ComboBox fx:id="hourCombBox1" prefHeight="26.0" prefWidth="80.0" promptText="Hour" />
+                  <ComboBox fx:id="secondComboBox1"  prefHeight="26.0" prefWidth="110.0" promptText="Second" />
                </children>
             </HBox>
-            <DatePicker fx:id="DatePicker" onAction="#DatePickerAction" prefHeight="25.0" prefWidth="197.0" />
-            <DatePicker fx:id="endDataPicker" onAction="#endDataPicker" prefHeight="25.0" prefWidth="201.0" />
-            <TextField fx:id="appointmentIDText" disable="true" onAction="#appointmentIDTextAction" promptText="Auto Generated " />
-            <ComboBox fx:id="customerIDText" disable="false" onAction="#customerIDTextAction" prefHeight="26.0" prefWidth="191.0" />
+            <DatePicker fx:id="DatePicker" prefHeight="25.0" prefWidth="197.0" />
+            <DatePicker fx:id="endDataPicker" prefHeight="25.0" prefWidth="201.0" />
+            <TextField  disable="true"  promptText="Auto Generated " />
+            <ComboBox fx:id="customerIDText" disable="false" prefHeight="26.0" prefWidth="191.0" />
             <ComboBox fx:id="userIDText" disable="false" onAction="#UserIDTextAction" prefHeight="26.0" prefWidth="204.0" />
          </children>
       </VBox>
       <VBox layoutX="422.0" layoutY="389.0" prefHeight="83.0" prefWidth="100.0" style="-fx-spacing: 8;">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#appointmentButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#appointmentTextButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#appointmentButtonAction" prefHeight="0.0" prefWidth="99.0" text="Add" />
+            <Button  mnemonicParsing="false" onAction="#appointmentTextButtonAction" prefHeight="26.0" prefWidth="100.0" text="Exit" />
          </children>
       </VBox>
    </children>

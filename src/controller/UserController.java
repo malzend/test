@@ -21,27 +21,9 @@ import java.util.Objects;
  */
 public class UserController {
     /**
-     * <br>
-     * FXML id selectors <br>
-     * <br>
-     * selectors used to read or set form fields <br>
-     */
-    @FXML
-    private Button logOutButton;
-
-    @FXML
-    private Button viewAppointmentButton;
-
-    @FXML
-    private Button viewCutomerButton;
-
-    @FXML
-    private Button viewReportButton;
-
-    /**
      *The ViewAppointmentAction will load the frame for appointments table page.<br>
      * @param event
-     * @throws IOException
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
     @FXML
     void ViewAppointmentAction(ActionEvent event) throws IOException {
@@ -52,13 +34,11 @@ public class UserController {
         Window.setTitle("Appointment page:");
         Window.show();
     }
-
     /**
      *ViewCustomerAction will load the frame for customer table page. <br>
-     * @param event
-     * @throws IOException
+     * @param event load customer page.<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
-
     @FXML
     void ViewCustomerAction(ActionEvent event) throws IOException {
 
@@ -68,14 +48,11 @@ public class UserController {
         Windoe.setScene(scene);
         Windoe.setTitle("Customer page:");
         Windoe.show();
-
-
     }
-
     /**
      * ViewReportAction will load the report page.<br>
-     * @param event
-     * @throws IOException
+     * @param event load Report page.<br>
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
     @FXML
     void ViewReportAction(ActionEvent event) throws IOException {
@@ -86,13 +63,11 @@ public class UserController {
         window.setTitle("LogIn page:");
         window.show();
     }
-
     /**
      *logOutButton will exit the user page and load the login page.<br>
      * @param event on button will exit the program <br>
-     * @throws IOException
+     * @throws IOException will throw an exception when the load meathead null.<br>
      */
-
     @FXML
     void logOutButton(ActionEvent event) throws IOException {
         JDBC.closeConnection();
