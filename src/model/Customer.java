@@ -11,8 +11,9 @@ public class Customer {
     private String postalCode;
     private String phoneNumber;
     private int divisionID;
-
-    public  Customer( int customerID, String customerName, String address, String postalCode , String phoneNumber, int divisionID) throws SQLException {
+    private String divisionName;
+    private String country;
+    public Customer(int customerID, String customerName, String address, String postalCode, String phoneNumber, int divisionID) throws SQLException {
         this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
@@ -21,55 +22,78 @@ public class Customer {
         this.divisionID = divisionID;
 
     }
-    public  Customer( int customerID, String customerName, String address, String postalCode , String phoneNumber) throws SQLException {
+
+    public Customer(int customerID, String customerName, String address, String postalCode, String phoneNumber) throws SQLException {
         this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
-        this.divisionID = divisionID;
 
     }
 
-    public Customer() throws SQLException { }
+    public Customer() throws SQLException {
+    }
 
-    public int  getCustomerID(){ return customerID; }
+    public int getCustomerID() {
+        return customerID;
+    }
 
-    public String getCustomerName(){ return customerName; }
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    public String getAddress(){ return address; }
+    public String getAddress() {
+        return address;
+    }
 
-    public String getPostalCode(){ return postalCode; }
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-    public String getPhoneNumber(){ return phoneNumber; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    public int getDivisionID(){ return divisionID; }
+    public int getDivisionID() {
+        return divisionID;
+    }
+    public String getDivisionName() {
+        return Model.getFirstLevelDivisionName(divisionID);
+    }
+    public String getCountryName() throws SQLException {
+        return country = Model.getFirstLevelDivisionCountry(divisionID);
+    }
 
-    public void setCustomerID(int customerID){
+    public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
 
-    public void setCustomerName(String customerName){
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public void setPostalCode(String postalCode){
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
-    public void setPhoneNumber(String phoneNumber){
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setDivisionID(int divisionID){
+    public void setDivisionID(int divisionID) {
         this.divisionID = divisionID;
     }
+    public void setCountryName() throws SQLException { this.country =Model.getFirstLevelDivisionCountry(divisionID);
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return customerName;
     }
 }
+

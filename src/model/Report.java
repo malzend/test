@@ -4,28 +4,29 @@ import java.time.LocalDateTime;
 
 public class Report {
 
-    private LocalDateTime date;
+    private String month;
     private String type;
-    private int total;
+    private int count;
     private String nameCountry;
 
-    public Report(LocalDateTime date, String type){
-        this.date = date;
+    public Report(String month, String type){
+        this.month = month;
         this.type = type;
     }
-    public Report(LocalDateTime date, String type, int total){
-        this.date = date;
+    public Report(String date, String type, int count){
+        this.month = date;
         this.type = type;
-        this.total = total;
+        this.count = count;
     }
-    public LocalDateTime getDate(){ return date; }
+    public String getDate(){ return month; }
+
+    public int getCount(){ return count; }
 
     public String getReportType(){ return type; }
 
     public String getCountryName(){return  nameCountry;}
 
     public void setCountryName(String countryName){ this.nameCountry = countryName; }
-
-    public void setTotal(int total){this.total = total;}
+    public void setCount(int total){this.count = total;}
     public void setReportType(String type){ this.type = type; }
 }

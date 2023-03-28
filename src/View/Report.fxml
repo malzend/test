@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="904.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportController">
+<AnchorPane prefHeight="400.0" prefWidth="904.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportController">
    <children>
       <VBox layoutX="38.0" layoutY="82.0" prefHeight="108.0" prefWidth="170.0" style="-fx-spacing: 10;">
          <children>
@@ -22,15 +14,13 @@
          </children>
       </VBox>
       <Button fx:id="exitButton" layoutX="563.0" layoutY="321.0" mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="26.0" prefWidth="99.0" text="Exit" />
-      <TableView fx:id="totalNumberTypeMonth" layoutX="252.0" layoutY="48.0" onSort="#totalNumberTypeMonthAction" prefHeight="200.0" prefWidth="227.0" visible="false">
+      <TableView fx:id="totalNumberTypeMonth" layoutX="252.0" layoutY="48.0" onSort="#totalNumberTypeMonthAction" prefHeight="200.0" prefWidth="363.0" visible="false">
         <columns>
           <TableColumn fx:id="type1" prefWidth="98.0" text="Type" />
           <TableColumn fx:id="month1" prefWidth="128.0" text="Month" />
+            <TableColumn fx:id="count" prefWidth="75.0" text="Count" />
         </columns>
       </TableView>
-      <ComboBox fx:id="month2" layoutX="562.0" layoutY="110.0" prefWidth="150.0" visible="false" />
-      <ComboBox fx:id="type" layoutX="562.0" layoutY="76.0" prefWidth="150.0" visible="false" />
-      <Button fx:id="Go" layoutX="563.0" layoutY="154.0" mnemonicParsing="false" onAction="#GoAction" prefHeight="26.0" prefWidth="99.0" text="Go" visible="false" />
       <TextField fx:id="totalCustomers" layoutX="526.0" layoutY="223.0" visible="false" />
       <Text fx:id="customerLabel" layoutX="562.0" layoutY="205.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Total customers" visible="false">
          <font>

@@ -78,6 +78,7 @@ public class LogInController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Locale.setDefault(new Locale("en","US"));
         timeZoneLabel.setText(ZoneId.systemDefault().toString());
         userNameLabel.setText(rb.getString("username"));
         passwordLabel.setText(rb.getString("password"));
@@ -176,7 +177,7 @@ public class LogInController implements Initializable {
 
                 alertAppointment.showAndWait();
             }
-            Locale.setDefault(new Locale("en","US"));
+
 
             Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.fxml"));
             Scene scene = new Scene(customerPage, 600, 400);
@@ -190,7 +191,7 @@ public class LogInController implements Initializable {
          * display.<br>
          */
         else {
-
+            Locale.setDefault(new Locale("en","US"));
             FileWriter file = new FileWriter("activityLogin.txt",true);
             file.write("Noun-Successful login: "+ LocalDateTime.now()+"\n");
             file.close();

@@ -77,6 +77,8 @@ public class ReportController implements Initializable {
     @FXML
     private TableColumn<Report, String> month1;
     @FXML
+    private TableColumn<Report, Integer> count;
+    @FXML
     private TableColumn<Appointment, Integer> customerID;
     @FXML
     private TableColumn<Appointment, String> description;
@@ -134,12 +136,9 @@ public class ReportController implements Initializable {
 
     @FXML
     void ScheduleForEachContactButton() throws SQLException {
-        type.setVisible(false);
-        month2.setVisible(true);
         totalCustomers.setVisible(false);
         customerLabel.setVisible(false);
         contact.setVisible(true);
-        Go.setVisible(false);
         typeLabel.setVisible(false);
         monthLabel.setVisible(false);
         contactLabel.setVisible(true);
@@ -157,8 +156,7 @@ public class ReportController implements Initializable {
 
         Go2.setVisible(true);
         Go3.setVisible(false);
-        month2.setVisible(false);
-        type.setVisible(false);
+     
 
         contactScheduleReport.setItems(AppointmentQuery.appointmentData_new());
         appointmentID.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("AppointmentID"));
@@ -199,29 +197,9 @@ public class ReportController implements Initializable {
     @FXML
     void totalCustomerAction() throws SQLException {
 
-        monthComboBox.addAll("1","2", "3", "4", "5", "6", "0", "8", "9", "10", "11", "12");
-        month2.setItems(monthComboBox);
-
-        for(int i = 0; i < AppointmentQuery.appointmentData_new().size();i++){
-            if(typeComboBox.contains(AppointmentQuery.appointmentData_new().get(i).getType())){
-
-            }
-            else{ typeComboBox.add(AppointmentQuery.appointmentData_new().get(i).getType());
-            }
-        }
-        type.setItems(typeComboBox);
-        totalNumberTypeMonth.getItems().clear();
-        Model.deleteReport();
-        AppointmentQuery.loadTypeMonth();
-
         contactScheduleReport.setVisible(false);
         totalNumberTypeMonth.setVisible(true);
-        Go.setVisible(true);
         contactLabel.setVisible(false);
-        monthLabel.setVisible(true);
-        typeLabel.setVisible(true);
-        month2.setVisible(true);
-        type.setVisible(true);
         Go2.setVisible(false);
         Go3.setVisible(false);
         contactScheduleReport.setVisible(false);
@@ -234,9 +212,10 @@ public class ReportController implements Initializable {
 
         panel.setVisible(false);
 
-        totalNumberTypeMonth.setItems(Model.getReport());
+        totalNumberTypeMonth.setItems(AppointmentQuery.loadTypeMonth());
         type1.setCellValueFactory(new PropertyValueFactory<Report, String>("Date"));
         month1.setCellValueFactory(new PropertyValueFactory<Report, String>("ReportType"));
+        count.setCellValueFactory(new PropertyValueFactory<Report, Integer>("Count"));
     }
 
     /**
@@ -248,18 +227,11 @@ public class ReportController implements Initializable {
     @FXML
     void whatToDoButtonAction() {
 
-        try {
-            AppointmentQuery.loadTypeMonth();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
         contactScheduleReport.setVisible(false);
         totalNumberTypeMonth.setVisible(false);
-        type.setVisible(false);
 
         contact.setVisible(false);
-        month2.setVisible(false);
         countryName.setVisible(true);
         totalCustomerField.setVisible(true);
         countryNameField.setVisible(true);
@@ -271,7 +243,6 @@ public class ReportController implements Initializable {
         countryLabel.setVisible(true);
         totalCustomerLabel.setVisible(true);
 
-        Go.setVisible(false);
         Go2.setVisible(false);
         Go3.setVisible(true);
         panel.setVisible(false);
@@ -280,36 +251,8 @@ public class ReportController implements Initializable {
     }
 
 
-
     @FXML
     void totalNumberTypeMonthAction() {
-    }
-
-    /**
-     * GoAction calls the method joinTypeMonth from AppointmentQuery and passed type and month.<br>
-     * The for loop add the total customer by type and month and displays the output in a text field.
-     * @throws SQLException
-     */
-    public void GoAction() throws SQLException {
-        int countType = 0;
-        for ( int i = 0; i<totalNumberTypeMonth.getItems().size(); i++) {
-            totalNumberTypeMonth.getItems().clear();
-            Model.deleteReport();
-        }
-
-        String typeSelection = type.getSelectionModel().getSelectedItem();
-        String monthSelection =month2.getSelectionModel().getSelectedItem();
-
-
-        AppointmentQuery.joinTypeMonth(monthSelection,typeSelection);
-        for ( int i = 0; i<Model.getReport().size(); i++) {
-            countType++;
-        }
-        totalNumberTypeMonth.setItems(Model.getReport());
-        type1.setCellValueFactory(new PropertyValueFactory<Report, String>("Date"));
-        month1.setCellValueFactory(new PropertyValueFactory<Report, String>("ReportType"));
-        totalCustomers.setText(String.valueOf(countType));
-
     }
 
     /**

@@ -9,8 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserQuery {
+/**
+ * UserQuery will do the following:<br>
+ * Load the user Id when the application is loaded.<br>
+ * User name is used to compare to the list provide of users and return their ID's if<br>
+ * their is a match.
+ *
+ */
 
+public class UserQuery {
+    /**
+     * userData loads user data from the database using a select Query.
+     * @return a list of user type
+     * @throws SQLException
+     */
     public static ObservableList<User> userData() throws SQLException {
         ObservableList<User> list = FXCollections.observableArrayList();
         String customerData = "SELECT *FROM users";
@@ -26,6 +38,11 @@ public class UserQuery {
         return list;
     }
 
+    /**
+     * getUser a method that is used to return user id
+     * @param name
+     * @return user id if the if condition is true else 0.
+     */
     public static int getUser(String name){
         for(User u: Model.getUser()){
             if(u.getUserName().equals(name))
@@ -33,11 +50,11 @@ public class UserQuery {
         }
         return  0;
     }
-    public static int getUserID(int id){
-        for(User u: Model.getUser()){
-            if(u.getUserID() == id)
-                return  u.getUserID();
-        }
-        return  0;
-    }
+//    public static int getUserID(int id){
+//        for(User u: Model.getUser()){
+//            if(u.getUserID() == id)
+//                return  u.getUserID();
+//        }
+//        return  0;
+//    }
 }

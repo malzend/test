@@ -1,5 +1,6 @@
 package controller;
 
+import helper.AppointmentQuery;
 import helper.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
+import model.Model;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +53,9 @@ public class CustomerController implements Initializable{
     @FXML
     private TableColumn<Customer, String> postalCode;
     @FXML
-    private TableColumn<Customer,Integer> First_Level_Division;
+    private TableColumn<Customer, String> Country;
+    @FXML
+    private TableColumn<Customer,String> First_Level_Division;
     @FXML
     private Button deleteCustomerButton;
     @FXML
@@ -75,7 +79,8 @@ public class CustomerController implements Initializable{
         address.setCellValueFactory(new PropertyValueFactory<Customer, String>("Address"));
         postalCode.setCellValueFactory(new PropertyValueFactory<Customer, String>("PostalCode"));
         phoneNumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("PhoneNumber"));
-        First_Level_Division.setCellValueFactory(new PropertyValueFactory<Customer,Integer>("DivisionID"));
+        First_Level_Division.setCellValueFactory(new PropertyValueFactory<Customer,String>("DivisionName"));
+        Country.setCellValueFactory(new PropertyValueFactory<Customer,String>("CountryName"));
 
     }
 
@@ -113,14 +118,13 @@ public class CustomerController implements Initializable{
          */
         try {
             int selectedID = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
-          //  Customer selectedItem = customerTable.getSelectionModel().getSelectedItem();
+           Customer selectedItem = customerTable.getSelectionModel().getSelectedItem();
 
-//            for (int i = 0; i < Model.getAppointments().size(); i++)
-//                if (selectedID == Model.getAppointments().get(i).getContactID()) {
-//                    Model.removeAppointment(Model.getAppointments().get(i));
-//                    AppointmentQuery.appointmentDelete(Model.getAppointments().get(i).getAppointmentID());
-//                }
-//            System.out.print(selectedItem);
+            for (int i = 0; i < AppointmentQuery.appointmentData_new().size(); i++)
+                if (selectedID == AppointmentQuery.appointmentData_new().get(i).getCustomerID()){
+                    AppointmentQuery.appointmentDelete(AppointmentQuery.appointmentData_new().get(i).getAppointmentID());
+                }
+            System.out.print(selectedItem);
             String processResult = CustomerQuery.customerDelete(selectedID);
             Alert alertType;
             if (processResult == "Success") {
@@ -158,7 +162,8 @@ public class CustomerController implements Initializable{
         address.setCellValueFactory(new PropertyValueFactory<Customer, String>("Address"));
         postalCode.setCellValueFactory(new PropertyValueFactory<Customer, String>("PostalCode"));
         phoneNumber.setCellValueFactory(new PropertyValueFactory<Customer, String>("PhoneNumber"));
-        First_Level_Division.setCellValueFactory(new PropertyValueFactory<Customer,Integer>("DivisionID"));
+        First_Level_Division.setCellValueFactory(new PropertyValueFactory<Customer,String>("DivisionName"));
+        Country.setCellValueFactory(new PropertyValueFactory<Customer,String>("CountryName"));
 
     }
 

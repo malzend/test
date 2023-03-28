@@ -209,22 +209,22 @@ public class AppointmentQuery {
      * @return an int.
      * @throws SQLException
      */
-    public static void joinTypeMonth(String month, String type) throws SQLException {
-        String joinedTable = "SELECT t1.Type AS Type, t2.Start AS Month, COUNT(t1.Type) AS Number FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID AND MONTH(t1.Start) = ?  AND  t1.Type = ? GROUP BY t1.Appointment_ID;";
-        PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
-        ps.setString(1, month);
-        ps.setNString(2, type);
-        ResultSet rl = ps.executeQuery();
-        while (rl.next()) {
-            Timestamp time = rl.getTimestamp("Month");
-            String Type = rl.getString("Type");
-            LocalDateTime timeDate = time.toLocalDateTime();
-
-            Model.addReport(new Report(timeDate, Type));
-
-        }
-
-    }
+//    public static void joinTypeMonth(String month, String type) throws SQLException {
+//        String joinedTable = "SELECT t1.Type AS Type, monthname(t2.Start) AS Month, COUNT(t1.Type) AS Count FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID group by t1.Type,monthname(t2.Start);";
+//        PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
+//        ps.setString(1, month);
+//        ps.setNString(2, type);
+//        ResultSet rl = ps.executeQuery();
+//        while (rl.next()) {
+//            String monthFromData = rl.getString("Month");
+//            String Type = rl.getString("Type");
+//            int count = rl.getInt("Count");
+//
+//            Model.addReport(new Report(monthFromData, Type,count));
+//
+//        }
+//
+//    }
 
     /**
      * loadTypeMonth the method will creates an sql query that inner joins appointments table <br>
@@ -232,16 +232,19 @@ public class AppointmentQuery {
      * total of appointment type.<br>
      * @throws SQLException
      */
-    public static void loadTypeMonth() throws SQLException {
-        String joinedTable = "SELECT t1.Type AS Type, t2.Start AS Month, sum(t1.Type) AS Number FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID GROUP BY t1.Appointment_ID;";
+    public static  ObservableList<Report> loadTypeMonth()throws SQLException {
+        ObservableList<Report> list = FXCollections.observableArrayList();
+        String joinedTable = "SELECT t1.Type AS Type, monthname(t2.Start) AS Month, count(t1.Type) AS Count FROM appointments t1, appointments t2 WHERE t1.Appointment_ID = t2.Appointment_ID group by t1.Type,monthname(t2.Start);";
         PreparedStatement ps = JDBC.connection.prepareStatement(joinedTable);
         ResultSet rl = ps.executeQuery();
         while (rl.next()) {
-            LocalDateTime time = rl.getTimestamp("Month").toLocalDateTime();
+            String monthFromData = rl.getString("Month");
             String Type = rl.getString("Type");
-            Model.addReport(new Report(time, Type));
+            int count = rl.getInt("Count");
+            list.add(new Report(monthFromData, Type,count));
 
         }
+        return list;
     }
 
     /**

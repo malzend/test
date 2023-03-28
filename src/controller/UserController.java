@@ -73,7 +73,7 @@ public class UserController {
     }
 
     /**
-     *ViewReportAction will load the report page.<br>
+     * ViewReportAction will load the report page.<br>
      * @param event
      * @throws IOException
      */

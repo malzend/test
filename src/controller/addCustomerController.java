@@ -74,18 +74,15 @@ public class addCustomerController implements Initializable {
 
     /**
      * addButtonAction will add a new user with the given input from the user.<br>
-     * @param event
-     * @throws IOException
      * @throws SQLException
      */
     @FXML
-    void addButtonAction(ActionEvent event) throws IOException, SQLException {
+    void addButtonAction() throws SQLException {
         String customerName = customerTextBox.getText();
         String address = addressTextBox.getText();
         String postalCode = addressTextBox.getText();
         String phoneNumber = phoneNumberTextBox.getText();
         int test = firstLevelDivisionCombBox.getValue().getDivisionID();
-        //int customerID = Integer.valueOf(customerIdTextBox.getText());
 
       String processResult =  CustomerQuery.customerAdd(customerName, address,postalCode, phoneNumber, test);
 
@@ -128,7 +125,7 @@ public class addCustomerController implements Initializable {
     }
 
     @FXML
-    void customerIdTextBoxAction(ActionEvent event) throws SQLException { }
+    void customerIdTextBoxAction()  { }
 
     @FXML
     void customerTextBoxAction(ActionEvent event) { }

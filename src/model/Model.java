@@ -95,26 +95,6 @@ public class Model {
     }
 
 
-    public static void modifyAppointmentInfo(int ID, Appointment appointment) {
-
-        for (int i = 0; i < APPOINTMENTS.size(); i++) {
-            if (ID == APPOINTMENTS.get(i).getAppointmentID()) {
-                APPOINTMENTS.get(i).setTitle(appointment.getTitle());
-                APPOINTMENTS.get(i).setDescription(appointment.getDescription());
-                APPOINTMENTS.get(i).setLocation(appointment.getLocation());
-                APPOINTMENTS.get(i).setType(appointment.getType());
-                APPOINTMENTS.get(i).setContactID(appointment.getContactID());
-                APPOINTMENTS.get(i).setCustomerID(appointment.getCustomerID());
-                APPOINTMENTS.get(i).setStarTimeDate(appointment.getStartTimeDate());
-                APPOINTMENTS.get(i).setEndTimeDate(appointment.getEndTimeDate());
-                APPOINTMENTS.get(i).setUserID(appointment.getUserID());
-
-            }
-        }
-
-    }
-
-    public static void addCountry(Country country){ COUNTRY.add(country); }
 
     public static String getCountryName(int i) throws SQLException {
 
@@ -131,14 +111,6 @@ public class Model {
         }
         return null;
     }
-    public static String getContactName(int i) {
-
-        while(i< CONTACTS.size()){
-            return CONTACTS.get(i).getContactName();
-        }
-        return null;
-    }
-
 
     public static void getCountryID(String countryName) throws SQLException {
         int countryIDforDivisoon = 0;
@@ -157,20 +129,33 @@ public class Model {
 
     }
 
-    public static String getFirstLevelDivision(int i) {
 
-        while(i< FirstLevelDivision.size()){
-            return FirstLevelDivision.get(i).getDivisionName();
-        }
-        return null;
-    }
     public static int getFirstLevelDivisionID(String firstLevelDivisionName) {
-
         for( int i = 0 ; i < FirstLevelDivision.size(); i++){
             if(FirstLevelDivision.get(i).getDivisionName() == firstLevelDivisionName)
             return FirstLevelDivision.get(i).getDivisionID();
         }
        return 0;
+    }
+
+    public static String getFirstLevelDivisionName(int firstLevelDivisionID) {
+        for( int i = 0 ; i < FirstLevelDivision.size(); i++){
+            if(FirstLevelDivision.get(i).getDivisionID() == firstLevelDivisionID)
+                return FirstLevelDivision.get(i).getDivisionName();
+        }
+        return null;
+    }
+    public static String getFirstLevelDivisionCountry(int firstLevelDivisionID) throws SQLException {
+
+        for( int i = 0 ; i < FirstLevelDivision.size(); i++){
+            if(FirstLevelDivision.get(i).getDivisionID() == firstLevelDivisionID)
+                for(int l =0;l< CustomerQuery.countryDATA().size();l++) {
+                    if (FirstLevelDivision.get(i).getDivisionCountryId() == CustomerQuery.countryDATA().get(l).getCountryID()) {
+                        return CustomerQuery.countryDATA().get(l).getCountry();
+                    }
+                }
+        }
+        return "nothing";
     }
 
 
@@ -225,30 +210,5 @@ public class Model {
        }
        return list;
     }
-
-//    public static ObservableList<Integer> businessTimeEnd() {
-//
-//        ObservableList<Integer> list =FXCollections.observableArrayList();
-//
-//        LocalDateTime estLDT = LocalDateTime.of(LocalDate.now(), LocalTime.of(8,0));
-//        ZoneId estZID = ZoneId.of("America/New_York");
-//        ZonedDateTime estZDT = ZonedDateTime.of(estLDT,estZID);
-//        ZoneId osZID = ZoneId.systemDefault();
-//
-//        ZonedDateTime osZDT = ZonedDateTime.ofInstant(estZDT.toInstant(), osZID);
-//        System.out.println(estZDT);
-//        System.out.println(osZDT);
-//
-//        int start = osZDT.getHour();
-//        int midnight = 0;
-//        for(int i = start; i <= start+13;i++){
-//            if(i<24){
-//                list.add(i);
-//            }
-//            else if(i>23){
-//                list.add(midnight++);
-//            }
-//        }
-//        return list;
-//    }
 }
+

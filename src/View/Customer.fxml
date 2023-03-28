@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
+<AnchorPane fx:id="country" prefHeight="400.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerController">
    <children>
       <VBox layoutX="698.0" layoutY="77.0" prefHeight="200.0" prefWidth="142.0" style="-fx-spacing: 10;">
          <children>
@@ -26,6 +26,7 @@
             <TableColumn fx:id="postalCode" prefWidth="91.0" text="Postal_Code" />
             <TableColumn fx:id="phoneNumber" prefWidth="91.0" text="Phone_Number" />
             <TableColumn fx:id="First_Level_Division" prefWidth="91.0" text="First level Division" />
+            <TableColumn fx:id="Country" prefWidth="75.0" text="Country" />
 
         </columns>
       </TableView>

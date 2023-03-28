@@ -23,6 +23,7 @@ import model.Model;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -44,10 +45,10 @@ public class ModifyAppointment implements Initializable {
      * <br>
      * selectors used to read or set form fields. <br>
      */
+
     public TextField appointmentIDText;
     @FXML
     private ComboBox<Integer> userComboBox;
-
     @FXML
     private Button addButton;
     @FXML
@@ -81,6 +82,7 @@ public class ModifyAppointment implements Initializable {
     @FXML
     private TextField typeAppointmentText;
 
+    public Appointment selectedAppointment;
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
     /**
      * initialize will populate the time, date and contact names for each combo, also  user ID and Customer id will<br>
@@ -115,6 +117,7 @@ public class ModifyAppointment implements Initializable {
      */
     public void setAppointment(Appointment appointment) throws SQLException {
 
+        selectedAppointment = appointment;
         LocalDate start = appointment.getStartTimeDate().toLocalDate();
         LocalDate end = appointment.getEndTimeDate().toLocalDate();
         endPickerDate.setValue(end);
@@ -166,7 +169,6 @@ public class ModifyAppointment implements Initializable {
      */
     @FXML
     void appointmentButtonAction(ActionEvent event) throws SQLException {
-
         int contactNum = -1;
         int appointmentID = Integer.parseInt(appointmentIDText.getText());
         String title = titleTextField.getText();
@@ -184,57 +186,94 @@ public class ModifyAppointment implements Initializable {
         int customer = customerComboBox.getValue();
         int user = userComboBox.getValue();
 
+
         for(int i = 0;i<  AppointmentQuery.loadContact().size();i++){
             if (AppointmentQuery.loadContact().get(i).getContactName().equals(contactAppointmentCombBox.getSelectionModel().getSelectedItem())){
                 contactNum =  AppointmentQuery.loadContact().get(i).getContactID();
             }
         }
 
+
         int contactID = contactNum;
 
         LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime );
         LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime );
-        boolean test = false;
 
-        int appointmentNum = 0;
+        Appointment noChange = (new Appointment(appointmentID,title,description,location,type,startDateTime,endDateTime,user,customer,contactID));
+        if(selectedAppointment.getAppointmentID() == noChange.getAppointmentID() && selectedAppointment.getTitle().equals(noChange.getTitle()) && selectedAppointment.getDescription().equals(noChange.getDescription()) &&
+           selectedAppointment.getLocation().equals(noChange.getLocation()) &&selectedAppointment.getType().equals(noChange.getType()) && selectedAppointment.getEndTimeDate().isEqual(noChange.getEndTimeDate()) && selectedAppointment.getStartTimeDate().isEqual(noChange.getStartTimeDate()) &&
+           selectedAppointment.getUserID() == noChange.getUserID() && selectedAppointment.getCustomerID() == noChange.getCustomerID() && selectedAppointment.getContactID() == noChange.getContactID()){
 
-        // Lambda 2
-        FilteredList<Appointment> customerInList = AppointmentQuery.appointmentData_new().filtered(t ->
-        { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID; });
-        /**
-         * The if condition checks if the appointmentLisT is empty or not.<br>
-         * If not empty then it will processed to the check if there is an overlap between the customer existing<br>
-         * appointment or not.
-         */
-        if (customerInList.size() > 0) {
-            for (int i = 0; i <  customerInList.size(); i++) {
+            Alert alertType;
+            alertType = new Alert(Alert.AlertType.WARNING);
+            alertType.setTitle("No changes");
+            alertType.setHeaderText("No change to appointment");
+            alertType.setContentText("No changes have been made to the appointment.");
+            alertType.show();
 
-                LocalDateTime testStartDate = customerInList.get(i).getStartTimeDate();
-                LocalDateTime testEndDate = customerInList.get(i).getEndTimeDate();
+        }
+        else{
 
-                if(!(startDateTime.isAfter(testEndDate) || startDateTime.equals(testEndDate)
-                        || endDateTime.isBefore(testStartDate) || endDateTime.equals(testStartDate))){
-                    test = true;
-                    appointmentNum = i;
-                    break;
+            boolean test = false;
+
+            int appointmentNum = 0;
+
+            // Lambda 2
+            FilteredList<Appointment> customerInList = AppointmentQuery.appointmentData_new().filtered(t ->
+            { int num = t.getCustomerID();return num == customer && t.getAppointmentID() != appointmentID; });
+            /**
+             * The if condition checks if the appointmentLisT is empty or not.<br>
+             * If not empty then it will processed to the check if there is an overlap between the customer existing<br>
+             * appointment or not.
+             */
+            if (customerInList.size() > 0) {
+                for (int i = 0; i <  customerInList.size(); i++) {
+
+                    LocalDateTime testStartDate = customerInList.get(i).getStartTimeDate();
+                    LocalDateTime testEndDate = customerInList.get(i).getEndTimeDate();
+
+                    if(!(startDateTime.isAfter(testEndDate) || startDateTime.equals(testEndDate)
+                            || endDateTime.isBefore(testStartDate) || endDateTime.equals(testStartDate))){
+                        test = true;
+                        appointmentNum = i;
+                        break;
+                    }
+
                 }
 
-            }
+                /**
+                 * if their is an overlap then display an alert.<br.
+                 * if not processed to add the new appointment to the database.<br>
+                 */
+                if (test == true) {
+                    Alert alertType = new Alert(Alert.AlertType.WARNING);
+                    alertType.setTitle("Appointment Overlapped");
+                    alertType.setHeaderText("This appointment is Overlapping");
+                    alertType.setContentText("The appointment is Overlapped with the following appointment \n" + customerInList.get(appointmentNum).getAppointmentID());
+                    alertType.show();
+                }
 
-            /**
-             * if their is an overlap then display an alert.<br.
-             * if not processed to add the new appointment to the database.<br>
-             */
-            if (test == true) {
-                Alert alertType = new Alert(Alert.AlertType.WARNING);
-                alertType.setTitle("Appointment Overlapped");
-                alertType.setHeaderText("This appointment is Overlapping");
-                alertType.setContentText("The appointment is Overlapped with the following appointment \n" + customerInList.get(appointmentNum).getAppointmentID());
-                alertType.show();
-            }
+                else {
 
-            else {
+                    String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
 
+                    if(processResult.equals("Success")) {
+                        Alert alertType;
+                        alertType = new Alert(Alert.AlertType.CONFIRMATION);
+                        alertType.setTitle("Insert record states");
+                        alertType.setHeaderText("Modify appointment was successful");
+                        alertType.setContentText("You have modified the appointment successful and updates have been applied ");
+                        alertType.show();
+                    } else {
+                        Alert alertType;
+                        alertType = new Alert(Alert.AlertType.WARNING);
+                        alertType.setTitle("Insert record states");
+                        alertType.setHeaderText("Insert was not successful");
+                        alertType.setContentText("The appointment failed to be modified");
+                        alertType.show();
+                    }
+                }
+            }else{
                 String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
 
                 if(processResult.equals("Success")) {
@@ -253,25 +292,8 @@ public class ModifyAppointment implements Initializable {
                     alertType.show();
                 }
             }
-        }else{
-            String processResult = AppointmentQuery.updateAppointment(appointmentID, title, description, location, type, startDateTime, endDateTime, user, customer, contactID);
-
-            if(processResult.equals("Success")) {
-                Alert alertType;
-                alertType = new Alert(Alert.AlertType.CONFIRMATION);
-                alertType.setTitle("Insert record states");
-                alertType.setHeaderText("Modify appointment was successful");
-                alertType.setContentText("You have modified the appointment successful and updates have been applied ");
-                alertType.show();
-            } else {
-                Alert alertType;
-                alertType = new Alert(Alert.AlertType.WARNING);
-                alertType.setTitle("Insert record states");
-                alertType.setHeaderText("Insert was not successful");
-                alertType.setContentText("The appointment failed to be modified");
-                alertType.show();
-            }
         }
+
     }
 
 

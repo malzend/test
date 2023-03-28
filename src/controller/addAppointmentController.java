@@ -166,9 +166,7 @@ public class addAppointmentController implements Initializable {
          */
         if (appointmentList.size() > 0) {
 
-
             for (int i = 0; i < appointmentList.size(); i++) {
-
 
                 LocalDateTime testStartDate = appointmentList.get(i).getStartTimeDate();
                 LocalDateTime testEndDate = appointmentList.get(i).getEndTimeDate();
