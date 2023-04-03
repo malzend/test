@@ -22,7 +22,7 @@ import java.util.Objects;
 public class UserController {
     /**
      *The ViewAppointmentAction will load the frame for appointments table page.<br>
-     * @param event
+     * @param event will load the appointment page.<br>
      * @throws IOException will throw an exception when the load meathead null.<br>
      */
     @FXML

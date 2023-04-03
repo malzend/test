@@ -51,8 +51,8 @@ public class addCustomerController implements Initializable {
 
     /**
      * initialize will populate the countyTextBox date form the dataBase<br>
-     * @param location
-     * @param resource
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resource The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @FXML
     public void initialize(URL location, ResourceBundle resource) {
@@ -113,9 +113,9 @@ public class addCustomerController implements Initializable {
     }
 
     /**
-     * exitButtonAction will load the User.fxml page.
+     * exitButtonAction will load the User.fxml page.<br>
      * @param event on button will exit the program <br>
-     * @throws SQLException when an invalid query process accrue.<br>
+     * @throws IOException will throw an exception when the load meathead is not.<br>
      *
      */
     @FXML

@@ -15,7 +15,6 @@ public abstract class JDBC {
      * protocol vendor location dataBaseName are used to form the jdbUrl.<br>
      * driver is used to get the JDBC interface that will handle the communication between intellja IDE
      * useName and password are the the database retentions.
-     * Connection manages connecting to a database, issuing queries and commands, and handling result sets obtained from the database.
      */
     private static final String protocol = "JDBC";
     private static final String vendor = ":mysql:";
@@ -25,6 +24,9 @@ public abstract class JDBC {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String useName = "sqlUser";
     private static final String password = "Passw0rd!";
+    /**
+     * Connection manages connecting to a database, issuing queries and commands, and handling result sets obtained from the database.
+     */
     public static Connection connection;
 
     /**

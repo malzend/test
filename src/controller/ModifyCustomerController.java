@@ -54,13 +54,15 @@ public class ModifyCustomerController implements Initializable {
 
     @FXML
     private TextField postalCodeTextBox;
-
+    /**
+     * used to track user id.<br>
+     */
     static int userID = 0;
 
     /**
      * initialize will populate the data of country names and store it in the combo box. <br>
-     * @param location
-     * @param resource
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resource The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @FXML
     public void initialize(URL location, ResourceBundle resource) {
@@ -98,7 +100,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * exitButtonAction will load the Customer page once the user clicks it.<br>
      * @param event on button will exit the program <br>
-     * @throws SQLException when an invalid query process accrue.<br>
+     * @throws IOException will throw an exception when the load meathead is not
      */
 
     @FXML
@@ -168,7 +170,7 @@ public class ModifyCustomerController implements Initializable {
          * if false then it will display not successful if ture it will display successful.<br>
          */
         if(processResult == "Success"){
-            Model.modifyCustomer(userID,new Customer(userID , customerName,address,postalCode,phoneNumber, dID));
+            //Model.modifyCustomer(userID,new Customer(userID , customerName,address,postalCode,phoneNumber, dID));
             alertType = new Alert(Alert.AlertType.CONFIRMATION);
             alertType.setTitle(" Modify record States");
             alertType.setHeaderText("Modify was successful");

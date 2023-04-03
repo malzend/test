@@ -3,9 +3,10 @@ package model;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-/**
- /**  This class Appointment contains the methods, gets and sets, that specifies class variables
- * via Utilizing the class constructor to access these methods */
+ /**
+  * This class Appointment contains the methods, gets and sets, that specifies class variables<br>
+  * via Utilizing the class constructor to access these methods.<br>
+  * */
 public class Appointment{
 
     private int appointmentID;
@@ -31,7 +32,7 @@ public class Appointment{
      * @param userID set variable userID
      * @param customerID set variable customerID
      * @param contactID set variable contactID
-     * @throws SQLException
+     * @throws SQLException when an invalid query process accrue.<br>
      */
 
     public Appointment(int appointmentID, String title, String description, String location, String type, LocalDateTime startTimeDate, LocalDateTime endTimeDate, int userID, int  customerID, int contactID) throws SQLException {

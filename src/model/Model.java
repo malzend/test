@@ -9,7 +9,13 @@ import java.sql.SQLException;
 import java.time.*;
 
 /**
- *
+ * Model class will fo the following:
+ * Load first level division data using an ObservableList .<br>
+ * Load county data using ObservableList.<br>
+ * Filter division base on country.<br>
+ * Get country ID.<br>
+ * Get division ID.<br>
+ * Convert est business hours to the locale time zone of the machine.<br>
  */
 public class Model {
 
@@ -19,85 +25,73 @@ public class Model {
     private static final ObservableList<FirstLevelDivision> FirstLevelDivision = FXCollections.observableArrayList();
     private static final ObservableList<Contact> CONTACTS = FXCollections.observableArrayList();
     private static final ObservableList<Customer> CUSTOMERS = FXCollections.observableArrayList();
-   // private static final ObservableList<Report> REPORT = FXCollections.observableArrayList();
     private static final ObservableList<FirstLevelDivision> filterDivision = FXCollections.observableArrayList();
 
-
     /**
-     *
-     * @return
+     * getCustomer method used to get list of Customers.<br>
+     * @return CUSTOMERS list.<br>
      */
     public static ObservableList<Customer> getCustomer() {
         return CUSTOMERS;
     }
-
+    /**
+     * getCountry method used to get the list of Country.<br>
+     * @return COUNTRY list.<br>
+     */
     public static ObservableList<Country> getCountry() { return COUNTRY; }
-
+    /**
+     * getUser method used to get the user list.<br>
+     * @return filterDivision list.<br>
+     */
     public static ObservableList<User> getUser() { return USERS; }
 
-//    public static ObservableList<Contact> getContacts() { return CONTACTS; }
-//
-//    public static ObservableList<FirstLevelDivision> getFirstLevelDivisions() { return FirstLevelDivision; }
-
+    /**
+     * getFilterDivision method used to get the accosted division for each country.<br>
+     * @return filterDivision list.<br>
+     */
     public static ObservableList<FirstLevelDivision> getFilterDivision() { return filterDivision; }
 
-//    public static ObservableList<Appointment> getAppointments() { return APPOINTMENTS; }
-//
-//    public static ObservableList<Report> getReport() { return REPORT; }
-
-
-
-//    public static void addCustomer(Customer customer) { CUSTOMERS.add(customer); }
-
+    /**
+     * addUser used to add a new division to the list.<br>
+     * @param user add to the list.<br>
+     */
     public static void addUser(User user) { USERS.add(user);}
 
-//    public static void addContact(Contact contact){ CONTACTS.add(contact);}
-
-//    public static void addAppointment(Appointment appointment) { APPOINTMENTS.add(appointment); }
-
+    /**
+     * addFirstLevelDivision used to add a new division to the list.<br>
+     * @param firstLevelDivision add to the list.<br>
+     */
     public static void addFirstLevelDivision(FirstLevelDivision firstLevelDivision){ FirstLevelDivision.add(firstLevelDivision); }
 
-
-//    public static void addReport(Report report) {  REPORT.add(report); }
-
-//    public static void removeCustomer(Customer customer) { CUSTOMERS.remove(customer); }
-
+    /**
+     * removeAllCustomer method deletes all customer for the list br>
+     */
     public static void removeAllCustomer() { CUSTOMERS.clear(); }
-
+    /**
+     * removeAllAppointment method deletes all appointments form the list br>
+     */
     public static void removeAllAppointment() { APPOINTMENTS.clear(); }
-
+    /**
+     * removeAllContact method deletes all contacts form the list br>
+     */
     public static void removeAllContact() { CONTACTS.clear(); }
-
+    /**
+     * removeAllUser method deletes  all customer form the list  br>
+     */
     public static void removeAllUser() { USERS.clear();}
-//
-//    public static void removeAllCountrys() { COUNTRY.clear();}
-//
-//    public static void removeAppointment(Appointment appointment) { APPOINTMENTS.remove(appointment); }
-//
-//    public static void deleteFirstLevelDivision(){ FirstLevelDivision.clear(); }
-//
-//    public static void deleteReport(){REPORT.clear();}
 
+
+    /**
+     * removeFilterDivision method deletes filterDivision that is accosted to each country.<br>
+     */
     public static void removeFilterDivision() { filterDivision.clear();}
 
-    public static void modifyCustomer(int ID, Customer customer) {
-
-        for (int i = 0; i < CUSTOMERS.size(); i++) {
-            if (CUSTOMERS.get(i).getCustomerID() == ID) {
-                CUSTOMERS.get(i).setCustomerName(customer.getCustomerName());
-                CUSTOMERS.get(i).setAddress(customer.getAddress());
-                CUSTOMERS.get(i).setCustomerID(customer.getCustomerID());
-                CUSTOMERS.get(i).setPostalCode(customer.getPostalCode());
-                CUSTOMERS.get(i).setPhoneNumber(customer.getPhoneNumber());
-                CUSTOMERS.get(i).setDivisionID(customer.getDivisionID());
-
-            }
-        }
-
-    }
-
-
-
+    /**
+     * getCountryName method gets the Country name for the database.<br>
+     * @param i to pass the position of country in the list.<br>
+     * @return Country if ture else null.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+     */
     public static String getCountryName(int i) throws SQLException {
 
         while(i< CustomerQuery.countryDATA().size()){
@@ -105,6 +99,13 @@ public class Model {
         }
         return null;
     }
+
+    /**
+     * getCountry_Name method used to get the country name.<br>
+     * @param ID is used in the if condition as comparison against the division.<br>
+     * @return country if true else null.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+     */
     public static String getCountry_Name(int ID) throws SQLException {
 
     for(int i = 0; i < CustomerQuery.countryDATA().size(); i++){
@@ -114,6 +115,11 @@ public class Model {
         return null;
     }
 
+    /**
+     * getCountryID method used to get the country ID.<br>
+     * @param countryName s used in the if condition as comparison against the division.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+     */
     public static void getCountryID(String countryName) throws SQLException {
         int countryIDforDivisoon = 0;
         for( int i = 0; i < CustomerQuery.countryDATA().size(); i++){
@@ -121,17 +127,19 @@ public class Model {
                countryIDforDivisoon = CustomerQuery.countryDATA().get(i).getCountryID();
 
             }
-
         for(int i = 0; i < FirstLevelDivision.size(); i++) {
             if (countryIDforDivisoon == FirstLevelDivision.get(i).getDivisionCountryId()) {
                 filterDivision.add(FirstLevelDivision.get(i));
             }
         }
 
-
     }
 
-
+    /**
+     * getFirstLevelDivisionID method used to get the id of a division.<br>
+     * @param firstLevelDivisionName is used in the if condition as comparison against the division.<br>
+     * @return division ID if true else 0.<br>
+     */
     public static int getFirstLevelDivisionID(String firstLevelDivisionName) {
         for( int i = 0 ; i < FirstLevelDivision.size(); i++){
             if(FirstLevelDivision.get(i).getDivisionName() == firstLevelDivisionName)
@@ -140,6 +148,12 @@ public class Model {
        return 0;
     }
 
+    /**
+     * getFirstLevelDivisionName method used to return the division name.<br>
+     * @param firstLevelDivisionID is used in the if condition as comparison against the division.<br>
+     * @return DivisionName if true else null.<br>
+     */
+
     public static String getFirstLevelDivisionName(int firstLevelDivisionID) {
         for( int i = 0 ; i < FirstLevelDivision.size(); i++){
             if(FirstLevelDivision.get(i).getDivisionID() == firstLevelDivisionID)
@@ -147,6 +161,13 @@ public class Model {
         }
         return null;
     }
+
+    /**
+     * getFirstLevelDivisionCountry method is used to return the country name.<br>
+     * @param firstLevelDivisionID is used in the if condition as comparison against the division list
+     * @return County if true else nothing.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+     */
     public static String getFirstLevelDivisionCountry(int firstLevelDivisionID) throws SQLException {
 
         for( int i = 0 ; i < FirstLevelDivision.size(); i++){
@@ -160,7 +181,11 @@ public class Model {
         return "nothing";
     }
 
-
+    /**
+     * customerFirstDivisionName method will return the division name form the FirstLevelDivision list.<br>
+     * @param ID used in if condition to compare the match ID.<br>
+     * @return DivisionName.<br>
+     */
     public static String customerFirstDivisionName(int ID) {
         for (int i = 0; i < FirstLevelDivision.size(); i++) {
             if (FirstLevelDivision.get(i).getDivisionID() == ID) {
@@ -169,6 +194,11 @@ public class Model {
         }
         return null; }
 
+    /**
+     * countriesFirstDivision method will return the id of a country using the forging key that was loaded form the database to the list of division.<br>
+     * @param ID used in if condition to compare the match ID.<br>
+     * @return  country ID.<br>
+     */
     public static int countriesFirstDivision(int ID) {
         for (int i = 0; i < FirstLevelDivision.size(); i++) {
             if ( ID == FirstLevelDivision.get(i).getDivisionID()) {
@@ -177,6 +207,12 @@ public class Model {
         }
         return 0; }
 
+    /**
+     * getContact_Name is used to get each contact name utilizing the contact ID.<br>
+     * @param contactID used to compare in the if condition.<br>
+     * @return String if true else null.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
+     */
     public static String getContact_Name(int contactID) throws SQLException {
 
         for (int i = 0; i < AppointmentQuery.loadContact().size(); i++) {
@@ -187,6 +223,10 @@ public class Model {
         return null;
     }
 
+    /**
+     * businessTimeStart method will get the est business hours by converting the local time zone of the machine.<br>
+     * @return list of Type Integer,<br>
+     */
    public static ObservableList<Integer> businessTimeStart() {
 
         ObservableList<Integer> list =FXCollections.observableArrayList();

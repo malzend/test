@@ -67,17 +67,19 @@ public class addAppointmentController implements Initializable {
     private TextField titleTextField;
     @FXML
     private TextField typeAppointmentText;
-
+    /**
+     * An ObservableList minutes is created to hold a list of minutes.<br>
+     */
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
     /**
      * initialize will populate the time , date and contact names for each combo, also  user ID and Customer id will<br>
      * populated for the Database.<br>
-     *  @param url
-     * @param resourceBundle
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resource The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @FXML
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resource) {
         minutes.addAll(0, 15, 30, 45,59);
         HourComboBox.setItems(Model.businessTimeStart());
         secondComboBox.setItems(minutes);
@@ -106,16 +108,12 @@ public class addAppointmentController implements Initializable {
     /**
      * setColumnUserAndCustomer will get the customerIDText and appointmentIDText form the appointment page when<br>
      * a row is selected.<br>
-     * @param id
+     * @param id set the id for customerIDText for the customer page.<br>
      */
     public void setColumnUserAndCustomer(int id)  {
+
         customerIDText.setValue(id);
     }
-    @FXML
-    void UserIDTextAction() { }
-
-    @FXML
-    void appointmentDescriptionTextAction() { }
 
     /**
      * appointmentButtonAction will do the following:<br>
@@ -211,7 +209,7 @@ public class addAppointmentController implements Initializable {
     /**
      * appointmentTextButtonAction allow the user to exit form the page to the appointment page.
      * @param event on button will exit the program <br>
-     * @throws SQLException when an invalid query process accrue.<br>
+     * @throws IOException will throw an exception when the load meathead is not point at nothing
      */
     @FXML
     void appointmentTextButtonAction(ActionEvent event) throws IOException {

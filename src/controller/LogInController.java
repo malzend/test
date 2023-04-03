@@ -71,8 +71,8 @@ public class LogInController implements Initializable {
      * Loads necessary ZoneID translates login text that are going to be used in the GUI form.<br>
      * Translate text to system language.<br>
      *
-     * @param location
-     * @param resources
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -115,13 +115,13 @@ public class LogInController implements Initializable {
 
         /**
          * The if condition is used to validate test variable if it true it will do the following:<br>
-         * activityLogin.txt file will record Success ful login and the time of the login. <br>
+         * login_activity.txt file will record Success ful login and the time of the login. <br>
          * The data for country, first level division, Contact and one of the report features data will be loaded. <br>
          * FilteredList of Appointment type will be created and used to store associated user appointment at the current day. <br>
          *
          */
         if (test == true) {
-            FileWriter file = new FileWriter("activityLogin.txt",true);
+            FileWriter file = new FileWriter("login_activity.txt",true);
             file.write("Successful login: "+ LocalDateTime.now()+ "\n");
             file.close();
             try {
@@ -183,12 +183,12 @@ public class LogInController implements Initializable {
             window.show();
         }
         /**
-         * else if the user is false then it will be recorded in the activityLogin.txt file and an Alert of wrong credentials wil
+         * else if the user is false then it will be recorded in the login_activity.txt file and an Alert of wrong credentials wil
          * display.<br>
          */
         else {
            // Locale.setDefault(new Locale("en","US"));
-            FileWriter file = new FileWriter("activityLogin.txt",true);
+            FileWriter file = new FileWriter("login_activity.txt",true);
             file.write("Noun-Successful login: "+ LocalDateTime.now()+"\n");
             file.close();
 

@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ *                          The main class will LAUNCH the program.<br>
+ */
 public class Main extends Application {
 
     @Override
@@ -19,7 +21,10 @@ public class Main extends Application {
 
     }
 
-
+    /**
+     * MIAN Class will be responsible for the lunching of the app.<br>
+     * @param args ontains the command-line arguments passed to the Java program upon invocation.<br>
+     */
     public static void main(String[] args) {
        // Locale.setDefault(new Locale("fr","FR"));
 

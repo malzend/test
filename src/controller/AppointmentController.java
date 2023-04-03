@@ -63,8 +63,8 @@ public class AppointmentController implements Initializable {
 
     /**
      * initialize will be used to load date to the appointments for the database.<br>
-     * @param location
-     * @param resource
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resource The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @FXML
     public void initialize(URL location, ResourceBundle resource) {
@@ -203,9 +203,9 @@ public class AppointmentController implements Initializable {
     }
 
 
-    @FXML
-    void modifyAppointmentAction() {
-    }
+//    @FXML
+//    void modifyAppointmentAction() {
+//    }
 
     /**
      * radioByWeekAction will filter the appointment by current week using AppointmentQuery.appointmentsByWeek().<br>

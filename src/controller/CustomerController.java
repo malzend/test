@@ -56,8 +56,8 @@ public class CustomerController implements Initializable{
 
     /**
      * initialize will populate data to the customer table from the database.<br>
-     * @param location
-     * @param resource
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resource The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @Override
     public void initialize(URL location, ResourceBundle resource) {
@@ -152,10 +152,10 @@ public class CustomerController implements Initializable{
     /**
      * exitAction loads the page for user.<br>
      * @param event on button will exit the program <br>
-     * @throws SQLException when an invalid query process accrue.<br>
+     * @throws IOException will throw an exception when the load meathead is not
      */
     @FXML
-    void exitAction(ActionEvent event)throws IOException {
+    void exitAction(ActionEvent event) throws IOException {
         Parent customerPage = FXMLLoader.load(getClass().getResource("/View/User.FXML"));
         Stage Window = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(customerPage);

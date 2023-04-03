@@ -1,52 +1,43 @@
 package model;
-
 /**
- *
- */
+ * This class Contact contains the methods, gets and sets, that specifies class variables<br>
+ * via Utilizing the class constructor to access these methods.<br>
+ * */
 public class Country {
-
     private int countryID;
     private String country;
-
     /**
-     *
-     * @param countryID
-     * @param country
+     * Country constructor is called to set it's parameters.<br>
+     * @param countryID set countryID.<br>
+     * @param country set country.<br>
      */
-
     public Country(int countryID, String country){
         this.countryID = countryID;
         this.country = country;
-
     }
-
     /**
-     *
-     * @return
+     * get for countryID.<br>
+     * @return the countryID.<br>
      */
     public int getCountryID(){ return countryID;}
-
     /**
-     *
-     * @return
+     * get for country.<br>
+     * @return the country.<br>
      */
     public String getCountry(){ return country; }
-
     /**
-     *
-     * @param CountyID
+     * set for countryID.<br>
+     * @param countyID set countyID.<br>
      */
-    public void setCountryID(int CountyID){ this.countryID = countryID; }
-
+    public void setCountryID(int countyID){ this.countryID = countryID; }
     /**
-     *
-     * @param country
+     * set for country.<br>
+     * @param country set country.<br>
      */
     public void setCountry(String country){ this.country= country ; }
-
     /**
-     *
-     * @return
+     * set for location.<br>
+     * @return country set country.<br>
      */
     @Override
     public String toString(){

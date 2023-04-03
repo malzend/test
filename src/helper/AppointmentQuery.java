@@ -208,6 +208,7 @@ public class AppointmentQuery {
      * and returns how many times a type accrued in a month. This will to help in determine the<br>
      * total of appointment type.<br>
      * @throws SQLException when an invalid query process accrue.<br>
+     * @return a ObservableList of type Report.<br>
      */
     public static  ObservableList<Report> loadTypeMonth()throws SQLException {
         ObservableList<Report> list = FXCollections.observableArrayList();
@@ -256,11 +257,11 @@ public class AppointmentQuery {
     }
 
     /**
-     * appointmentsByWeek filter appointment by the current week using select query.
+     * appointmentsByMonth filter appointment by the current month using select query.
      * @return an ObservableList of Appointment type.<br>
      * @throws SQLException when an invalid query process accrue.<br>
      */
-    public static ObservableList<Appointment> appointmentsByWeek() throws SQLException {
+    public static ObservableList<Appointment> appointmentsByMonth() throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
 
         String customerData = "select * from appointments where MONTH(Start) = MONTH(now()) and YEAR(Start) = YEAR(now());";
@@ -285,12 +286,12 @@ public class AppointmentQuery {
     }
 
     /**
-     * appointmentsByMonth filter appointment by the current month using select query.
+     * appointmentsByWeek filter appointment by the current week using select query.
      * @return an ObservableList of Appointment type.<br>
      * @throws SQLException when an invalid query process accrue.<br>
      */
 
-    public static ObservableList<Appointment> appointmentsByMonth() throws SQLException {
+    public static ObservableList<Appointment> appointmentsByWeek() throws SQLException {
         ObservableList<Appointment> list = FXCollections.observableArrayList();
 
         String customerData = "Select * from appointments where Start between date_sub(now(), interval 7 day) and date_add(curdate(), interval 7 day)";

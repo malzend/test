@@ -70,14 +70,19 @@ public class ModifyAppointment implements Initializable {
     private TextField titleTextField;
     @FXML
     private TextField typeAppointmentText;
-
+    /**
+     * selectedAppointment define a new instance of appointment for the purpose fo comparing if appointment info changed or not.<br>
+     */
     public Appointment selectedAppointment;
+    /**
+     * Create a ObservableList minutes of Integer Type.<br>
+     */
     ObservableList<Integer> minutes = FXCollections.observableArrayList();
     /**
      * initialize will populate the time, date and contact names for each combo, also  user ID and Customer id will<br>
      * populated for the Database.<br>
-     * @param location
-     * @param resources
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known. <br>
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.<br>
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,10 +105,13 @@ public class ModifyAppointment implements Initializable {
         try{ for (int i = 0; i < UserQuery.userData().size();i++) { userComboBox.getItems().add(UserQuery.userData().get(i).getUserID()); } } catch (SQLException throwables) { throwables.printStackTrace(); }
         try{ for (int i = 0; i < CustomerQuery.customerDataNew().size();i++){ customerComboBox.getItems().add(CustomerQuery.customerDataNew().get(i).getCustomerID()); }  } catch (SQLException throwables) { throwables.printStackTrace(); }
     }
-    @FXML
+
     /**
      * setAppointment will get the selected appointment row information and load it to modify page.<br>
+     * @param appointment will pass a instance of data that is passed form appointment table.<br>
+     * @throws SQLException when an invalid query process accrue.<br>
      */
+    @FXML
     public void setAppointment(Appointment appointment) throws SQLException {
 
         selectedAppointment = appointment;
@@ -277,7 +285,7 @@ public class ModifyAppointment implements Initializable {
     /**
      * appointmentExitButtonAction allow the user to exit form the page to the appointment page.<br>
      * @param event on button will exit the program <br>
-     * @throws SQLException when an invalid query process accrue.<br>
+     * @throws IOException will throw an exception when the load meathead is not
      */
     @FXML
     void appointmentExitButtonAction(ActionEvent event) throws IOException {
